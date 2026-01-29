@@ -1,6 +1,9 @@
 .vercel
 .env*.local
 
+#node
+node_modules
+
 # General
 .DS_Store
 __MACOSX/
