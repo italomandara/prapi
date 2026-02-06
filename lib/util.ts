@@ -1,17 +1,28 @@
-export function disambiguateRequiredAge(data) {
+import type {
+  SteamStoreAPIResponse,
+  SteamStoreGameData,
+} from "../types/steam.types.js";
+
+export function disambiguateRequiredAge(
+  data: SteamStoreGameData["data"],
+): SteamStoreGameData["data"] {
   return {
     ...data,
     required_age: String(data.required_age),
   };
 }
 
-export function stripHTML(data) {
+export function stripHTML(
+  data: SteamStoreGameData["data"],
+): SteamStoreGameData["data"] {
   const stringifiedData = JSON.stringify(data);
   const strippedData = stringifiedData.replace(/<\/?(.*?)>/g, "");
   return JSON.parse(strippedData);
 }
 
-export function fixNonNullRequirements(data) {
+export function fixNonNullRequirements(
+  data: SteamStoreGameData["data"],
+): SteamStoreGameData["data"] {
   return {
     ...data,
     mac_requirements: Array.isArray(data.mac_requirements)
@@ -23,7 +34,7 @@ export function fixNonNullRequirements(data) {
   };
 }
 
-export function processData(data) {
+export function processData(data: SteamStoreAPIResponse["data"]) {
   return Object.values(data).map(({ data }) =>
     stripHTML(disambiguateRequiredAge(fixNonNullRequirements(data))),
   );
