@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  const JSONresponse: SteamStoreAPIResponse = {};
+  const JSONresponse: SteamStoreGameData[] = [];
 
   if (typeof appids === "string") {
     for (const appid of appids.split(",")) {
@@ -22,9 +22,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         `https://store.steampowered.com/api/appdetails?appids=${appid}`,
       );
       console.log(data);
-      JSONresponse[appid as keyof SteamStoreAPIResponse] = processData(
-        data,
-      ) as SteamStoreGameData;
+      JSONresponse.push(processData(data));
     }
   }
 
