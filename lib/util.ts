@@ -34,8 +34,10 @@ export function fixNonNullRequirements(
   };
 }
 
-export function processData(data: SteamStoreAPIResponse["data"]) {
+export function processData(
+  data: SteamStoreAPIResponse["data"],
+): SteamStoreGameData[] {
   return Object.values(data).map(({ data }) =>
     stripHTML(disambiguateRequiredAge(fixNonNullRequirements(data))),
-  );
+  ) as unknown as SteamStoreGameData[];
 }
