@@ -20,4 +20,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     };
     res.json(JSONresponse);
   }
+  res.json({ data: { [appid as string]: [{}] } });
 }
