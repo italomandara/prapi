@@ -1,7 +1,10 @@
 import axios from "axios";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { requireApiKey } from "../../../lib/auth.js";
-import type { SteamStoreAPIResponse } from "../../../types/steam.types.js";
+import type {
+  SteamStoreAPIResponse,
+  SteamStoreGameData,
+} from "../../../types/steam.types.js";
 import { processData } from "../../../lib/util.js";
 
 const API_ROOT = process.env.API_ROOT;
@@ -11,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  const JSONresponse: SteamStoreAPIResponse | { data: {} } = { data: {} };
+  const JSONresponse: SteamStoreGameData["data"][] = [];
 
   if (typeof appids === "string") {
     for (const appid of appids.split(",")) {
@@ -19,9 +22,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         `https://store.steampowered.com/api/appdetails?appids=${appid}`,
       );
       console.log(data);
-      JSONresponse.data[appid as keyof SteamStoreAPIResponse["data"]] = {
-        ...processData(data),
-      };
+      JSONresponse.push(
+        processData(data) as unknown as SteamStoreGameData["data"],
+      );
     }
   }
 
