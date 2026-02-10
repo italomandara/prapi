@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  const JSONresponse: SteamStoreGameData[] = [];
+  const JSONresponse: { data: SteamStoreGameData[] } = { data: [] };
 
   if (typeof appids === "string") {
     for (const appid of appids.split(",")) {
@@ -23,7 +23,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       );
       console.log(data);
       const d = processData(data)[0]!;
-      JSONresponse.push(d);
+      JSONresponse.data.push(d);
     }
   }
 
