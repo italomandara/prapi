@@ -25,12 +25,15 @@ export function fixNonNullRequirements(
 ): SteamStoreGameData["data"] {
   return {
     ...data,
-    mac_requirements: Array.isArray(data.mac_requirements)
-      ? null
-      : data.mac_requirements,
-    linux_requirements: Array.isArray(data.linux_requirements)
-      ? null
-      : data.linux_requirements,
+    mac_requirements:
+      Array.isArray(data.mac_requirements) && data.mac_requirements.length < 1
+        ? null
+        : data.mac_requirements,
+    linux_requirements:
+      Array.isArray(data.linux_requirements) &&
+      data.linux_requirements.length < 1
+        ? null
+        : data.linux_requirements,
   };
 }
 

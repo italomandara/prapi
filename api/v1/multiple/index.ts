@@ -21,7 +21,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { data }: SteamStoreAPIResponse = await axios.get(
         `https://store.steampowered.com/api/appdetails?appids=${appid}`,
       );
-      console.log(data);
       const d = processData(data)[0]!;
       JSONresponse.data.push(d);
     }
