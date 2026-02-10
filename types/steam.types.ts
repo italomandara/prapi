@@ -1,3 +1,5 @@
+import type { Nullable } from "./util.types.js";
+
 type Category = { id: number; description: string };
 type Genre = { id: number; description: string };
 type Sub = {
@@ -39,7 +41,7 @@ type HLight = {
 type Requirement = {
   minimum: string;
   recommended?: string;
-} | null;
+};
 
 type Screenshot = {
   id: number;
@@ -64,9 +66,9 @@ export type SteamStoreGameData = {
     capsule_image: string;
     capsule_imagev5: string;
     website: string;
-    pc_requirements: Requirement;
-    mac_requirements: Requirement;
-    linux_requirements: Requirement;
+    pc_requirements: Nullable<Requirement>;
+    mac_requirements: Nullable<Requirement>;
+    linux_requirements: Nullable<Requirement>;
     developers: string[];
     publishers: string[];
     packages: number[];
