@@ -3,6 +3,7 @@ import { requireApiKey } from "../../lib/auth.js";
 import { processData } from "../../lib/util.js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type { SteamStoreAPIResponse } from "../../types/steam.types.js";
+import { CACHE_LIFESPAN, CACHE_STALE_REVALIDATE } from "../../constants.js";
 
 const API_ROOT = process.env.API_ROOT;
 
@@ -20,5 +21,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     };
     res.json(JSONresponse);
   }
-  res.json({ data: { [appid as string]: [{}] } });
+  res
+    .setHeader(
+      "Cache-Control",
+      `public, s-maxage=${CACHE_LIFESPAN} ', stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
+    )
+    .json({
+      data: { [appid as string]: [{}] },
+    });
 }
