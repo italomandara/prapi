@@ -18,5 +18,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     `https://store.steampowered.com/api/appdetails?appids=${appids}`,
   );
 
-  res.json(response);
+  res.json(response.data);
 }
