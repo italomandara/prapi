@@ -5,6 +5,10 @@ import type { SteamStoreAPIResponse } from "../../../types/steam.types.js";
 import { CACHE_LIFESPAN, CACHE_STALE_REVALIDATE } from "../../../constants.js";
 const API_ROOT = process.env.API_ROOT;
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader(
+    "Cache-Control",
+    `public, s-maxage=${CACHE_LIFESPAN} ', stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
+  );
   const { appid } = req.query;
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -14,12 +18,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     `https://store.steampowered.com/api/appdetails?appids=${appid}`,
   );
 
-  res
-    .setHeader(
-      "Cache-Control",
-      `public, s-maxage=${CACHE_LIFESPAN} ', stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
-    )
-    .json({
-      data: Object.values(data).map(({ data }) => data),
-    });
+  res.json({
+    data: Object.values(data).map(({ data }) => data),
+  });
 }

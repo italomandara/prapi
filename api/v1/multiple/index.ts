@@ -11,6 +11,10 @@ import { CACHE_LIFESPAN, CACHE_STALE_REVALIDATE } from "../../../constants.js";
 const API_ROOT = process.env.API_ROOT;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader(
+    "Cache-Control",
+    `public, s-maxage=${CACHE_LIFESPAN} ', stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
+  );
   const { appids } = req.query;
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -29,10 +33,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  res
-    .setHeader(
-      "Cache-Control",
-      `public, s-maxage=${CACHE_LIFESPAN} ', stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
-    )
-    .json({ JSONresponse });
+  res.json({ JSONresponse });
 }
