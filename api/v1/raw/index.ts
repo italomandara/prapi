@@ -2,7 +2,11 @@ import axios from "axios";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { requireApiKey } from "../../../lib/auth.js";
 import type { SteamStoreAPIResponse } from "../../../types/steam.types.js";
-import { CACHE_LIFESPAN, CACHE_STALE_REVALIDATE } from "../../../constants.js";
+import {
+  CACHE_LIFESPAN,
+  CACHE_STALE_REVALIDATE,
+  SteamAppInfoEndpoint,
+} from "../../../constants.js";
 const API_ROOT = process.env.API_ROOT;
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader(
@@ -15,10 +19,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const { data }: SteamStoreAPIResponse = await axios.get(
-    `https://store.steampowered.com/api/appdetails?appids=${appid}`,
+    `${SteamAppInfoEndpoint}?appids=${appid}`,
   );
 
-  res.json({
+  return res.json({
     data: Object.values(data).map(({ data }) => data),
   });
 }

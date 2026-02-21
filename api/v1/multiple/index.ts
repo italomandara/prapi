@@ -17,7 +17,7 @@ const API_ROOT = process.env.API_ROOT;
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader(
     "Cache-Control",
-    `public, s-maxage=${CACHE_LIFESPAN} ', stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
+    `public, s-maxage=${CACHE_LIFESPAN} , stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
   );
   const { appids } = req.query;
   if (!requireApiKey(req)) {
@@ -28,7 +28,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (typeof appids === "string") {
     for (const appid of appids.split(",")) {
       const { data }: SteamStoreAPIResponse = await axios.get(
-        // `https://store.steampowered.com/api/appdetails?appids=${appid}`,
         `${baseUrl}/api/v1/proxy/?appids=${appid}`,
         { headers: { "x-api-key": process.env.PUBLIC_API_KEY } },
       );
@@ -40,5 +39,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
   }
 
-  res.json(JSONresponse);
+  return res.json(JSONresponse);
 }
