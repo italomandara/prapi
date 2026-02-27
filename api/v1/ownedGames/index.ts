@@ -4,10 +4,6 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type { SteamStoreAPIResponse } from "../../../types/steam.types.js";
 import { CACHE_LIFESPAN, CACHE_STALE_REVALIDATE } from "../../../constants.js";
 
-//http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=very_secret&steamid=76561198127577202&format=json
-
-const API_ROOT = process.env.API_ROOT;
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader(
     "Cache-Control",
@@ -22,12 +18,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       process.env.PRIVATE_API_KEY
     }&steamid=${userid}`,
   );
-  //   if (typeof userid === "string" && data[userid]?.success === true) {
-  //     const JSONresponse = {
-  //       data,
-  //     };
-  //     res.json(JSONresponse);
-  //   }
   return res.json({
     data,
   });
