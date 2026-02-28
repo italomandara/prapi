@@ -24,6 +24,29 @@ export function stripHTML(
   return JSON.parse(strippedData);
 }
 
+export function NoRepeatedRequirementsTitles(
+  data: SteamStoreGameData["data"],
+): SteamStoreGameData["data"] {
+  return {
+    ...data,
+    pc_requirements: {
+      minimum: data.pc_requirements?.minimum.replace("Minimum:", "") ?? "",
+      recommended:
+        data.pc_requirements?.minimum.replace("Recommended:", "") ?? "",
+    },
+    mac_requirements: {
+      minimum: data.mac_requirements?.minimum.replace("Minimum:", "") ?? "",
+      recommended:
+        data.mac_requirements?.minimum.replace("Recommended:", "") ?? "",
+    },
+    linux_requirements: {
+      minimum: data.linux_requirements?.minimum.replace("Minimum:", "") ?? "",
+      recommended:
+        data.linux_requirements?.minimum.replace("Recommended:", "") ?? "",
+    },
+  };
+}
+
 export function fixNonNullRequirements(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
