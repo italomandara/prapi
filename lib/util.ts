@@ -4,7 +4,7 @@ import type {
 } from "../types/steam.types.js";
 
 class ProcessData {
-  public data: SteamStoreGameData["data"];
+  private data: SteamStoreGameData["data"];
 
   constructor(data: SteamStoreGameData["data"]) {
     this.data = data;
@@ -71,6 +71,10 @@ class ProcessData {
     };
     return this;
   }
+
+  public get result() {
+    return this.data;
+  }
 }
 
 export function processData(
@@ -82,6 +86,6 @@ export function processData(
         .NoRepeatedRequirementsTitles()
         .fixNonNullRequirements()
         .disambiguateRequiredAge()
-        .stripHTML().data,
+        .stripHTML().result,
   ) as unknown as SteamStoreGameData[];
 }
