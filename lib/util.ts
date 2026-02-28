@@ -43,6 +43,11 @@ export function processData(
   data: SteamStoreAPIResponse["data"],
 ): SteamStoreGameData[] {
   return Object.values(data).map(({ data }) =>
-    stripHTML(disambiguateRequiredAge(fixNonNullRequirements(data))),
+    stripHTML(
+      disambiguateRequiredAge(
+        // fixNonNullRequirements(data)
+        data,
+      ),
+    ),
   ) as unknown as SteamStoreGameData[];
 }
