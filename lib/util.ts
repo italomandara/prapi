@@ -26,6 +26,7 @@ export function stripHTML(
 export function fixNonNullRequirements(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
+  return data;
   return {
     ...data,
     mac_requirements:
