@@ -33,7 +33,7 @@ class ProcessData {
   }
 
   public NoRepeatedRequirementsTitles() {
-    const reg = /(<strong>)?(Minimum|Required):(<\/strong>)?<br\s?\/?>/;
+    const reg = /(<strong>)?(Minimum|Recommended):(<\/strong>)?<br\s?\/?>/;
     this.data = {
       ...this.data,
       pc_requirements: {
