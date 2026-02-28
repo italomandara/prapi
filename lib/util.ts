@@ -3,71 +3,92 @@ import type {
   SteamStoreGameData,
 } from "../types/steam.types.js";
 
-export function disambiguateRequiredAge(
-  data: SteamStoreGameData["data"],
-): SteamStoreGameData["data"] {
-  return {
-    ...data,
-    required_age: String(data.required_age),
-  };
-}
+class ProcessData {
+  public data: SteamStoreGameData["data"];
 
-export function stripHTML(
-  data: SteamStoreGameData["data"],
-): SteamStoreGameData["data"] {
-  const stringifiedData = JSON.stringify(data);
-  const strippedData = stringifiedData
-    .replace(/<br\s?\/?>/g, "\\n")
-    .replace(/<li>(.*?)<\/li>/g, "- $1\\n")
-    .replace(/(\\n)+/g, "\\n")
-    .replace(/<\/?(.*?)>/g, "");
-  return JSON.parse(strippedData);
-}
+  constructor(data: SteamStoreGameData["data"]) {
+    this.data = data;
+  }
 
-export function NoRepeatedRequirementsTitles(
-  data: SteamStoreGameData["data"],
-): SteamStoreGameData["data"] {
-  return {
-    ...data,
-    pc_requirements: {
-      minimum: data.pc_requirements?.minimum.replace("Minimum:", "") ?? "",
-      recommended:
-        data.pc_requirements?.minimum.replace("Recommended:", "") ?? "",
-    },
-    mac_requirements: {
-      minimum: data.mac_requirements?.minimum.replace("Minimum:", "") ?? "",
-      recommended:
-        data.mac_requirements?.minimum.replace("Recommended:", "") ?? "",
-    },
-    linux_requirements: {
-      minimum: data.linux_requirements?.minimum.replace("Minimum:", "") ?? "",
-      recommended:
-        data.linux_requirements?.minimum.replace("Recommended:", "") ?? "",
-    },
-  };
-}
+  public disambiguateRequiredAge() {
+    this.data = {
+      ...this.data,
+      required_age: String(this.data.required_age),
+    };
+    return this;
+  }
 
-export function fixNonNullRequirements(
-  data: SteamStoreGameData["data"],
-): SteamStoreGameData["data"] {
-  return {
-    ...data,
-    mac_requirements:
-      Array.isArray(data.mac_requirements) && data.mac_requirements.length < 1
-        ? null
-        : data.mac_requirements,
-    linux_requirements:
-      Array.isArray(data.linux_requirements) &&
-      data.linux_requirements.length < 1
-        ? null
-        : data.linux_requirements,
-  };
+  public stripHTML() {
+    const stringifiedData = JSON.stringify(this.data);
+    const strippedData = stringifiedData
+      .replace(/<br\s?\/?>/g, "\\n")
+      .replace(/(\\n)+/g, "\\n")
+      .replace(/<li>(.*?)<\/li>/g, "- $1\\n")
+      .replace(/<\/?(.*?)>/g, "")
+      .replace(/&quot;/g, '"');
+    this.data = JSON.parse(strippedData);
+    return this;
+  }
+
+  public NoRepeatedRequirementsTitles() {
+    this.data = {
+      ...this.data,
+      pc_requirements: {
+        minimum:
+          this.data.pc_requirements?.minimum.replace("Minimum:", "") ?? "",
+        recommended:
+          this.data.pc_requirements?.recommended?.replace("Recommended:", "") ??
+          "",
+      },
+      mac_requirements: {
+        minimum:
+          this.data.mac_requirements?.minimum.replace("Minimum:", "") ?? "",
+        recommended:
+          this.data.mac_requirements?.recommended?.replace(
+            "Recommended:",
+            "",
+          ) ?? "",
+      },
+      linux_requirements: {
+        minimum:
+          this.data.linux_requirements?.minimum.replace("Minimum:", "") ?? "",
+        recommended:
+          this.data.linux_requirements?.recommended?.replace(
+            "Recommended:",
+            "",
+          ) ?? "",
+      },
+    };
+    return this;
+  }
+
+  public fixNonNullRequirements() {
+    this.data = {
+      ...this.data,
+      mac_requirements:
+        Array.isArray(this.data.mac_requirements) &&
+        this.data.mac_requirements.length < 1
+          ? null
+          : this.data.mac_requirements,
+      linux_requirements:
+        Array.isArray(this.data.linux_requirements) &&
+        this.data.linux_requirements.length < 1
+          ? null
+          : this.data.linux_requirements,
+    };
+    return this;
+  }
 }
 
 export function processData(
   data: SteamStoreAPIResponse["data"],
 ): SteamStoreGameData[] {
-  return Object.values(data).map(({ data }) =>
-    stripHTML(disambiguateRequiredAge(fixNonNullRequirements(data))),
+  return Object.values(data).map(
+    ({ data }) =>
+      new ProcessData(data)
+        .NoRepeatedRequirementsTitles()
+        .fixNonNullRequirements()
+        .disambiguateRequiredAge()
+        .stripHTML().data,
   ) as unknown as SteamStoreGameData[];
 }
