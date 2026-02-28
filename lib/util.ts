@@ -72,7 +72,7 @@ class ProcessData {
     return this;
   }
 
-  public get result() {
+  public get processedData() {
     return this.data;
   }
 }
@@ -86,6 +86,6 @@ export function processData(
         .NoRepeatedRequirementsTitles()
         .fixNonNullRequirements()
         .disambiguateRequiredAge()
-        .stripHTML().result,
+        .stripHTML().processedData,
   ) as unknown as SteamStoreGameData[];
 }
