@@ -6,6 +6,7 @@ import type {
 export function disambiguateRequiredAge(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
+  return data;
   return {
     ...data,
     required_age: String(data.required_age),
@@ -15,10 +16,11 @@ export function disambiguateRequiredAge(
 export function stripHTML(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
+  return data;
   const stringifiedData = JSON.stringify(data);
   const strippedData = stringifiedData
-    // .replace(/<br\s?\/?>/g, "\n")
-    // .replace(/<li>(.*?)<\/li>/g, "- $1\n")
+    .replace(/<br\s?\/?>/g, "\n")
+    .replace(/<li>(.*?)<\/li>/g, "- $1\n")
     .replace(/<\/?(.*?)>/g, "");
   return JSON.parse(strippedData);
 }
@@ -26,6 +28,7 @@ export function stripHTML(
 export function fixNonNullRequirements(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
+  return data;
   return {
     ...data,
     mac_requirements:
@@ -44,11 +47,6 @@ export function processData(
   data: SteamStoreAPIResponse["data"],
 ): SteamStoreGameData[] {
   return Object.values(data).map(({ data }) =>
-    stripHTML(
-      disambiguateRequiredAge(
-        // fixNonNullRequirements(data)
-        data,
-      ),
-    ),
+    stripHTML(disambiguateRequiredAge(fixNonNullRequirements(data))),
   ) as unknown as SteamStoreGameData[];
 }
