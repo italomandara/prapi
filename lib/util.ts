@@ -19,7 +19,7 @@ export function stripHTML(
   const strippedData = stringifiedData
     .replace(/<br\s?\/?>/g, "\\n")
     .replace(/<li>(.*?)<\/li>/g, "- $1\\n")
-    .replace(/\\n+/g, "\\n")
+    .replace(/(\\n)+/g, "\\n")
     .replace(/<\/?(.*?)>/g, "");
   return JSON.parse(strippedData);
 }
