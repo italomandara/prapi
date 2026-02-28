@@ -17,7 +17,8 @@ export function stripHTML(
 ): SteamStoreGameData["data"] {
   const stringifiedData = JSON.stringify(data);
   const strippedData = stringifiedData
-    .replace(/<br\s?\/>/g, "\n")
+    .replace(/<br\s?\/?>/g, "\n")
+    .replace(/<li>(.*?)<\/li>/g, "- $1\n")
     .replace(/<\/?(.*?)>/g, "");
   return JSON.parse(strippedData);
 }
@@ -28,12 +29,11 @@ export function fixNonNullRequirements(
   return {
     ...data,
     mac_requirements:
-      Array.isArray(data.mac_requirements) && data.mac_requirements.length > 1
+      Object.keys(data.mac_requirements).length > 1
         ? data.mac_requirements
         : null,
     linux_requirements:
-      Array.isArray(data.linux_requirements) &&
-      data.linux_requirements.length > 1
+      Object.keys(data.linux_requirements).length > 1
         ? data.linux_requirements
         : null,
   };
