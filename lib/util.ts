@@ -29,13 +29,14 @@ export function fixNonNullRequirements(
   return {
     ...data,
     mac_requirements:
-      Object.keys(data.mac_requirements).length > 1
-        ? data.mac_requirements
-        : null,
+      Array.isArray(data.mac_requirements) && data.mac_requirements.length < 1
+        ? null
+        : data.mac_requirements,
     linux_requirements:
-      Object.keys(data.linux_requirements).length > 1
-        ? data.linux_requirements
-        : null,
+      Array.isArray(data.linux_requirements) &&
+      data.linux_requirements.length < 1
+        ? null
+        : data.linux_requirements,
   };
 }
 
