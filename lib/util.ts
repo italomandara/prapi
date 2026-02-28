@@ -16,7 +16,9 @@ export function stripHTML(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
   const stringifiedData = JSON.stringify(data);
-  const strippedData = stringifiedData.replace(/<\/?(.*?)>/g, "");
+  const strippedData = stringifiedData
+    .replace(/<br\s?\/>/g, "\n")
+    .replace(/<\/?(.*?)>/g, "");
   return JSON.parse(strippedData);
 }
 
