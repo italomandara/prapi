@@ -6,7 +6,6 @@ import type {
 export function disambiguateRequiredAge(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
-  return data;
   return {
     ...data,
     required_age: String(data.required_age),
@@ -28,7 +27,6 @@ export function stripHTML(
 export function fixNonNullRequirements(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
-  return data;
   return {
     ...data,
     mac_requirements:
