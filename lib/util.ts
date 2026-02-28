@@ -21,6 +21,8 @@ class ProcessData {
   public stripHTML() {
     const stringifiedData = JSON.stringify(this.data);
     const strippedData = stringifiedData
+      .replace(/^<br\s?\/?>/, "")
+      .replace(/<br\s?\/?>$/, "")
       .replace(/<br\s?\/?>/g, "\\n")
       .replace(/(\\n)+/g, "\\n")
       .replace(/<li>(.*?)<\/li>/g, "- $1\\n")
@@ -31,32 +33,23 @@ class ProcessData {
   }
 
   public NoRepeatedRequirementsTitles() {
+    const reg = /(<strong>)?(Minimum|Required):(<\/strong>)?<br\s?\/?>/;
     this.data = {
       ...this.data,
       pc_requirements: {
-        minimum:
-          this.data.pc_requirements?.minimum.replace("Minimum:", "") ?? "",
+        minimum: this.data.pc_requirements?.minimum.replace(reg, "") ?? "",
         recommended:
-          this.data.pc_requirements?.recommended?.replace("Recommended:", "") ??
-          "",
+          this.data.pc_requirements?.recommended?.replace(reg, "") ?? "",
       },
       mac_requirements: {
-        minimum:
-          this.data.mac_requirements?.minimum.replace("Minimum:", "") ?? "",
+        minimum: this.data.mac_requirements?.minimum.replace(reg, "") ?? "",
         recommended:
-          this.data.mac_requirements?.recommended?.replace(
-            "Recommended:",
-            "",
-          ) ?? "",
+          this.data.mac_requirements?.recommended?.replace(reg, "") ?? "",
       },
       linux_requirements: {
-        minimum:
-          this.data.linux_requirements?.minimum.replace("Minimum:", "") ?? "",
+        minimum: this.data.linux_requirements?.minimum.replace(reg, "") ?? "",
         recommended:
-          this.data.linux_requirements?.recommended?.replace(
-            "Recommended:",
-            "",
-          ) ?? "",
+          this.data.linux_requirements?.recommended?.replace(reg, "") ?? "",
       },
     };
     return this;
