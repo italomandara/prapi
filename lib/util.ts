@@ -15,11 +15,10 @@ export function disambiguateRequiredAge(
 export function stripHTML(
   data: SteamStoreGameData["data"],
 ): SteamStoreGameData["data"] {
-  return data;
   const stringifiedData = JSON.stringify(data);
   const strippedData = stringifiedData
-    .replace(/<br\s?\/?>/g, "\n")
-    .replace(/<li>(.*?)<\/li>/g, "- $1\n")
+    // .replace(/<br\s?\/?>/g, "\n")
+    // .replace(/<li>(.*?)<\/li>/g, "- $1\n")
     .replace(/<\/?(.*?)>/g, "");
   return JSON.parse(strippedData);
 }
