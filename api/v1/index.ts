@@ -27,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const JSONresponse = {
       data: processData(data),
     };
-    res.json(JSONresponse);
+    return res.json(JSONresponse);
   }
   return res.json({
     data: [],
