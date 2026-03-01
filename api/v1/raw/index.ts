@@ -43,8 +43,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Unauthorized" });
   }
   const {
-    data: { response: data },
-  }: SteamStoreAPIResponse = await axios.get(
+    data: {
+      response: { players: data },
+    },
+  }: any = await axios.get(
     `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
       process.env.PRIVATE_API_KEY
     }&steamids=${userid}`,
