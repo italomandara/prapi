@@ -47,7 +47,7 @@ class ProcessData {
         this.data.pc_requirements,
       )
         ? {
-            minimum: this.data.pc_requirements?.minimum.replace(reg, "") ?? "",
+            minimum: this.data.pc_requirements?.minimum?.replace(reg, "") ?? "",
             recommended:
               this.data.pc_requirements?.recommended?.replace(reg, "") ?? "",
           }
@@ -56,7 +56,8 @@ class ProcessData {
         this.data.mac_requirements,
       )
         ? {
-            minimum: this.data.mac_requirements?.minimum.replace(reg, "") ?? "",
+            minimum:
+              this.data.mac_requirements?.minimum?.replace(reg, "") ?? "",
             recommended:
               this.data.mac_requirements?.recommended?.replace(reg, "") ?? "",
           }
@@ -66,7 +67,7 @@ class ProcessData {
       )
         ? {
             minimum:
-              this.data.linux_requirements?.minimum.replace(reg, "") ?? "",
+              this.data.linux_requirements?.minimum?.replace(reg, "") ?? "",
             recommended:
               this.data.linux_requirements?.recommended?.replace(reg, "") ?? "",
           }
