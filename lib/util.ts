@@ -32,10 +32,11 @@ class ProcessData {
     return this;
   }
 
-  static checkRequirementsData(requirements: any) {
+  private static checkRequirementsData(requirements: any) {
     if (requirements === null) return false;
     if (typeof requirements === "undefined") return false;
     if (Array.isArray(requirements) && requirements.length < 1) return false;
+    return true;
   }
 
   public NoRepeatedRequirementsTitles() {
@@ -80,18 +81,18 @@ class ProcessData {
       pc_requirements: ProcessData.checkRequirementsData(
         this.data.mac_requirements,
       )
-        ? null
-        : this.data.mac_requirements,
+        ? this.data.mac_requirements
+        : null,
       mac_requirements: ProcessData.checkRequirementsData(
         this.data.mac_requirements,
       )
-        ? null
-        : this.data.mac_requirements,
+        ? this.data.mac_requirements
+        : null,
       linux_requirements: ProcessData.checkRequirementsData(
         this.data.linux_requirements,
       )
-        ? null
-        : this.data.linux_requirements,
+        ? this.data.linux_requirements
+        : null,
     };
     return this;
   }
