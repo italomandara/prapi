@@ -91,7 +91,7 @@ export function processData(
     ({ data }) =>
       new ProcessData(data)
         .fixNonNullRequirements()
-        .NoRepeatedRequirementsTitles()
+        // .NoRepeatedRequirementsTitles()
         .disambiguateRequiredAge()
         .stripHTML().processedData,
   ) as unknown as SteamStoreGameData[];
