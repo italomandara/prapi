@@ -32,25 +32,37 @@ class ProcessData {
     return this;
   }
 
+  static checkRequirementsData(requirements: any) {
+    if (requirements === null) return false;
+    if (typeof requirements === "undefined") return false;
+    if (Array.isArray(requirements) && requirements.length < 1) return false;
+  }
+
   public NoRepeatedRequirementsTitles() {
     const reg = /(<strong>)?(Minimum|Recommended):(<\/strong>)?<br\s?\/?>/;
     this.data = {
       ...this.data,
-      pc_requirements: this.data.pc_requirements
+      pc_requirements: ProcessData.checkRequirementsData(
+        this.data.pc_requirements,
+      )
         ? {
             minimum: this.data.pc_requirements?.minimum.replace(reg, "") ?? "",
             recommended:
               this.data.pc_requirements?.recommended?.replace(reg, "") ?? "",
           }
         : null,
-      mac_requirements: this.data.mac_requirements
+      mac_requirements: ProcessData.checkRequirementsData(
+        this.data.mac_requirements,
+      )
         ? {
             minimum: this.data.mac_requirements?.minimum.replace(reg, "") ?? "",
             recommended:
               this.data.mac_requirements?.recommended?.replace(reg, "") ?? "",
           }
         : null,
-      linux_requirements: this.data.linux_requirements
+      linux_requirements: ProcessData.checkRequirementsData(
+        this.data.linux_requirements,
+      )
         ? {
             minimum:
               this.data.linux_requirements?.minimum.replace(reg, "") ?? "",
@@ -65,16 +77,21 @@ class ProcessData {
   public fixNonNullRequirements() {
     this.data = {
       ...this.data,
-      mac_requirements:
-        Array.isArray(this.data.mac_requirements) &&
-        this.data.mac_requirements.length < 1
-          ? null
-          : this.data.mac_requirements,
-      linux_requirements:
-        Array.isArray(this.data.linux_requirements) &&
-        this.data.linux_requirements.length < 1
-          ? null
-          : this.data.linux_requirements,
+      pc_requirements: ProcessData.checkRequirementsData(
+        this.data.mac_requirements,
+      )
+        ? null
+        : this.data.mac_requirements,
+      mac_requirements: ProcessData.checkRequirementsData(
+        this.data.mac_requirements,
+      )
+        ? null
+        : this.data.mac_requirements,
+      linux_requirements: ProcessData.checkRequirementsData(
+        this.data.linux_requirements,
+      )
+        ? null
+        : this.data.linux_requirements,
     };
     return this;
   }
@@ -91,7 +108,7 @@ export function processData(
     ({ data }) =>
       new ProcessData(data)
         .fixNonNullRequirements()
-        // .NoRepeatedRequirementsTitles()
+        .NoRepeatedRequirementsTitles()
         .disambiguateRequiredAge()
         .stripHTML().processedData,
   ) as unknown as SteamStoreGameData[];
