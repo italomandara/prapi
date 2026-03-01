@@ -1,6 +1,7 @@
 import axios from "axios";
 import { requireApiKey } from "../../../lib/auth.js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import type { GetPlayerSummariesResponse } from "../../../types/steam.types.js";
 import { CACHE_LIFESPAN, CACHE_STALE_REVALIDATE } from "../../../constants.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -16,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     data: {
       response: { players: data },
     },
-  }: any = await axios.get(
+  }: GetPlayerSummariesResponse = await axios.get(
     `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
       process.env.PRIVATE_API_KEY
     }&steamids=${userid}`,
