@@ -80,9 +80,9 @@ class ProcessData {
     this.data = {
       ...this.data,
       pc_requirements: ProcessData.checkRequirementsData(
-        this.data.mac_requirements,
+        this.data.pc_requirements,
       )
-        ? this.data.mac_requirements
+        ? this.data.pc_requirements
         : null,
       mac_requirements: ProcessData.checkRequirementsData(
         this.data.mac_requirements,
