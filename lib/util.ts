@@ -36,21 +36,28 @@ class ProcessData {
     const reg = /(<strong>)?(Minimum|Recommended):(<\/strong>)?<br\s?\/?>/;
     this.data = {
       ...this.data,
-      pc_requirements: {
-        minimum: this.data.pc_requirements?.minimum.replace(reg, "") ?? "",
-        recommended:
-          this.data.pc_requirements?.recommended?.replace(reg, "") ?? "",
-      },
-      mac_requirements: {
-        minimum: this.data.mac_requirements?.minimum.replace(reg, "") ?? "",
-        recommended:
-          this.data.mac_requirements?.recommended?.replace(reg, "") ?? "",
-      },
-      linux_requirements: {
-        minimum: this.data.linux_requirements?.minimum.replace(reg, "") ?? "",
-        recommended:
-          this.data.linux_requirements?.recommended?.replace(reg, "") ?? "",
-      },
+      pc_requirements: this.data.pc_requirements
+        ? {
+            minimum: this.data.pc_requirements?.minimum.replace(reg, "") ?? "",
+            recommended:
+              this.data.pc_requirements?.recommended?.replace(reg, "") ?? "",
+          }
+        : null,
+      mac_requirements: this.data.mac_requirements
+        ? {
+            minimum: this.data.mac_requirements?.minimum.replace(reg, "") ?? "",
+            recommended:
+              this.data.mac_requirements?.recommended?.replace(reg, "") ?? "",
+          }
+        : null,
+      linux_requirements: this.data.linux_requirements
+        ? {
+            minimum:
+              this.data.linux_requirements?.minimum.replace(reg, "") ?? "",
+            recommended:
+              this.data.linux_requirements?.recommended?.replace(reg, "") ?? "",
+          }
+        : null,
     };
     return this;
   }
@@ -83,8 +90,8 @@ export function processData(
   return Object.values(data).map(
     ({ data }) =>
       new ProcessData(data)
-        .NoRepeatedRequirementsTitles()
         .fixNonNullRequirements()
+        .NoRepeatedRequirementsTitles()
         .disambiguateRequiredAge()
         .stripHTML().processedData,
   ) as unknown as SteamStoreGameData[];
