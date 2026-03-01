@@ -28,7 +28,8 @@ class ProcessData {
       .replace(/<li>(.*?)<\/li>/g, "- $1\\n")
       .replace(/<\/?(.*?)>/g, "")
       .replace(/&quot;/g, '"');
-    this.data = JSON.parse(strippedData);
+    // this.data = JSON.parse(strippedData);
+    this.data = strippedData as unknown as SteamStoreGameData["data"];
     return this;
   }
 
