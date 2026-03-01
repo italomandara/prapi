@@ -30,6 +30,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.json(JSONresponse);
   }
   return res.json({
-    data: { [appid as string]: [{}] },
+    data: { [appid as string]: [] },
   });
 }
