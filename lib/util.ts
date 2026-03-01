@@ -25,7 +25,7 @@ class ProcessData {
       .replace(/<br\s?\/?>$/, "")
       .replace(/<br\s?\/?>/g, "\\n")
       .replace(/(\\n)+/g, "\\n")
-      .replace(/<li>(.*?)<\/li>/g, "- $1\\n")
+      .replace(/<li>(.*?)(<br\s?\/?>)?<\/li>/g, "- $1\\n")
       .replace(/<\/?(.*?)>/g, "")
       .replace(/&quot;/g, "'");
     this.data = JSON.parse(strippedData);
