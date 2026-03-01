@@ -23,9 +23,9 @@ class ProcessData {
     const strippedData = stringifiedData
       .replace(/^<br\s?\/?>/, "")
       .replace(/<br\s?\/?>$/, "")
+      .replace(/<li>(.*?)(<br\s?\/?>)?<\/li>/g, "- $1\\n")
       .replace(/<br\s?\/?>/g, "\\n")
       .replace(/(\\n)+/g, "\\n")
-      .replace(/<li>(.*?)(<br\s?\/?>)?<\/li>/g, "- $1\\n")
       .replace(/<\/?(.*?)>/g, "")
       .replace(/&quot;/g, "'");
     this.data = JSON.parse(strippedData);
