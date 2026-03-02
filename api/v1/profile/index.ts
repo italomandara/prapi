@@ -14,29 +14,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-    let friends: any = {};
-    let recentlyPlayed: any = {};
-    // let players: GetPlayerSummariesResponse = {};
+  let friends: any = {};
+  let recentlyPlayed: any = {};
+  // let players: GetPlayerSummariesResponse = {};
 
-    // try {
-    //   friends = await axios.get(
-    //     `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
-    //       process.env.PRIVATE_API_KEY
-    //     }&steamid=${userid}&relationship=friend`,
-    //   );
-    // } catch (error) {
-    //   console.error("Error fetching friends:", error);
-    // }
+  try {
+    friends = await axios.get(
+      `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
+        process.env.PRIVATE_API_KEY
+      }&steamid=${userid}&relationship=friend`,
+    );
+  } catch (error) {
+    console.error("Error fetching friends:", error);
+  }
 
-    // try {
-    //   recentlyPlayed = await axios.get(
-    //     `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
-    //       process.env.PRIVATE_API_KEY
-    //     }&steamid=${userid}&format=json`,
-    //   );
-    // } catch (error) {
-    //   console.error("Error fetching recently played games:", error);
-    // }
+  try {
+    recentlyPlayed = await axios.get(
+      `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
+        process.env.PRIVATE_API_KEY
+      }&steamid=${userid}&format=json`,
+    );
+  } catch (error) {
+    console.error("Error fetching recently played games:", error);
+  }
 
   const {
     data: {
@@ -47,9 +47,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       process.env.PRIVATE_API_KEY
     }&steamids=${userid}`,
   );
-  
+
   return res.json({
     data,
+    friends,
+    recentlyPlayed,
   });
 }
 
