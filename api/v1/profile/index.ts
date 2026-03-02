@@ -15,15 +15,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   let friends: any = {};
   let recentlyPlayed: any = {};
-  const {
-    data: {
-      response: { players },
-    },
-  }: GetPlayerSummariesResponse = await axios.get(
-    `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
-      process.env.PRIVATE_API_KEY
-    }&steamids=${userid}`,
-  );
+  let players: GetPlayerSummariesResponse = {};
+
+  try {
+    const {
+      data: {
+        response: { players: data },
+      },
+    }: GetPlayerSummariesResponse = await axios.get(
+      `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
+        process.env.PRIVATE_API_KEY
+      }&steamids=${userid}`,
+    );
+    players = data;
+  } catch (error) {
+    console.error("Error fetching player summaries:", error);
+  }
 
   try {
     friends = await axios.get(
@@ -46,7 +53,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   return res.json({
-    data: { players, friends, recentlyPlayed },
+    data: { players: players, friends, recentlyPlayed },
   });
 }
 
