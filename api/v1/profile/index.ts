@@ -18,25 +18,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   let recentlyPlayed: any = {};
   // let players: GetPlayerSummariesResponse = {};
 
-  try {
-    friends = await axios.get(
-      `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
-        process.env.PRIVATE_API_KEY
-      }&steamid=${userid}&relationship=friend`,
-    ).data;
-  } catch (error) {
-    console.error("Error fetching friends:", error);
-  }
+  // try {
+  //   friends = await axios.get(
+  //     `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
+  //       process.env.PRIVATE_API_KEY
+  //     }&steamid=${userid}&relationship=friend`,
+  //   ).data;
+  // } catch (error) {
+  //   console.error("Error fetching friends:", error);
+  // }
 
-  try {
-    recentlyPlayed = await axios.get(
-      `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
-        process.env.PRIVATE_API_KEY
-      }&steamid=${userid}&format=json`,
-    ).data;
-  } catch (error) {
-    console.error("Error fetching recently played games:", error);
-  }
+  // try {
+  //   recentlyPlayed = await axios.get(
+  //     `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
+  //       process.env.PRIVATE_API_KEY
+  //     }&steamid=${userid}&format=json`,
+  //   ).data;
+  // } catch (error) {
+  //   console.error("Error fetching recently played games:", error);
+  // }
 
   const {
     data: {
