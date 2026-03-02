@@ -23,7 +23,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
         process.env.PRIVATE_API_KEY
       }&steamid=${userid}&relationship=friend`,
-    );
+    ).data;
   } catch (error) {
     console.error("Error fetching friends:", error);
   }
@@ -33,7 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
         process.env.PRIVATE_API_KEY
       }&steamid=${userid}&format=json`,
-    );
+    ).data;
   } catch (error) {
     console.error("Error fetching recently played games:", error);
   }
