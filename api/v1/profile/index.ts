@@ -13,47 +13,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  let friends: any = {};
-  let recentlyPlayed: any = {};
-  let players: GetPlayerSummariesResponse = {};
 
-  try {
-    const {
-      data: {
-        response: { players: data },
-      },
-    }: GetPlayerSummariesResponse = await axios.get(
-      `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
-        process.env.PRIVATE_API_KEY
-      }&steamids=${userid}`,
-    );
-    players = data;
-  } catch (error) {
-    console.error("Error fetching player summaries:", error);
-  }
+    let friends: any = {};
+    let recentlyPlayed: any = {};
+    // let players: GetPlayerSummariesResponse = {};
 
-  try {
-    friends = await axios.get(
-      `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
-        process.env.PRIVATE_API_KEY
-      }&steamid=${userid}&relationship=friend`,
-    );
-  } catch (error) {
-    console.error("Error fetching friends:", error);
-  }
+    // try {
+    //   friends = await axios.get(
+    //     `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
+    //       process.env.PRIVATE_API_KEY
+    //     }&steamid=${userid}&relationship=friend`,
+    //   );
+    // } catch (error) {
+    //   console.error("Error fetching friends:", error);
+    // }
 
-  try {
-    recentlyPlayed = await axios.get(
-      `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
-        process.env.PRIVATE_API_KEY
-      }&steamid=${userid}&format=json`,
-    );
-  } catch (error) {
-    console.error("Error fetching recently played games:", error);
-  }
+    // try {
+    //   recentlyPlayed = await axios.get(
+    //     `${process.env.API_ROOT}/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${
+    //       process.env.PRIVATE_API_KEY
+    //     }&steamid=${userid}&format=json`,
+    //   );
+    // } catch (error) {
+    //   console.error("Error fetching recently played games:", error);
+    // }
 
+  const {
+    data: {
+      response: { players: data },
+    },
+  }: GetPlayerSummariesResponse = await axios.get(
+    `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
+      process.env.PRIVATE_API_KEY
+    }&steamids=${userid}`,
+  );
+  
   return res.json({
-    data: { players: players, friends, recentlyPlayed },
+    data,
   });
 }
 
