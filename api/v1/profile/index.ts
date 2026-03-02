@@ -15,20 +15,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   const {
     data: {
-      response: { players: data },
+      response: { players },
     },
   }: GetPlayerSummariesResponse = await axios.get(
     `${process.env.API_ROOT}/ISteamUser/GetPlayerSummaries/v0002/?key=${
       process.env.PRIVATE_API_KEY
     }&steamids=${userid}`,
   );
+
+  const friends: any = await axios.get(
+    `${process.env.API_ROOT}/ISteamUser/GetFriendList/v0001/?key=${
+      process.env.PRIVATE_API_KEY
+    }&steamid=${userid}&relationship=friend`,
+  );
+
   return res.json({
-    data,
+    data: { players, friends },
   });
 }
 
 // http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamid=76561197960435530&relationship=friend
-// http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=440&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamid=76561197972495328
+
 // http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=XXXXXXXXXXXXXXXXX&steamid=76561197960434622&format=json
 
 // import axios from "axios";
