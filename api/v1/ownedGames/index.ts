@@ -9,14 +9,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     "Cache-Control",
     `public, s-maxage=${CACHE_LIFESPAN} , stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
   );
-  const { userid } = req.query;
+  const { userid, include_appinfo } = req.query;
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
   const { data }: SteamStoreAPIResponse = await axios.get(
     `${process.env.API_ROOT}/IPlayerService/GetOwnedGames/v0001/?key=${
       process.env.PRIVATE_API_KEY
-    }&steamid=${userid}`,
+    }&steamid=${userid}${include_appinfo === "true" ? "&include_appinfo=true" : ""}`,
   );
   return res.json({
     data,
