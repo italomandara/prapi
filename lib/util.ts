@@ -100,6 +100,19 @@ class ProcessData {
     return this;
   }
 
+  public fixPackageGroupsNumberAsString() {
+    this.data = {
+      ...this.data,
+      package_groups: Array.isArray(this.data.package_groups)
+        ? this.data.package_groups.map((group) => ({
+            ...group,
+            display_type: String(group.display_type),
+          }))
+        : [],
+    };
+    return this;
+  }
+
   public fixPriceNonInt() {
     this.data = {
       ...this.data,
@@ -121,6 +134,7 @@ export function processData(data: SteamStoreGameData[]): SteamStoreGameData[] {
   return Object.values(data).map(
     ({ data }) =>
       new ProcessData(data)
+        .fixPackageGroupsNumberAsString()
         .fixNonNullRequirements()
         .NoRepeatedRequirementsTitles()
         .disambiguateRequiredAge()

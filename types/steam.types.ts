@@ -19,7 +19,7 @@ type PackageGroup = {
   description: string;
   selection_text: string;
   save_text: string;
-  display_type: number;
+  display_type: string;
   is_recurring_subscription: string;
   subs: Sub[];
 };
