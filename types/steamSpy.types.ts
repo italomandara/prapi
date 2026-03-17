@@ -12,8 +12,8 @@ export type SteamSpyGameData = {
   average_2weeks: number;
   median_forever: number;
   median_2weeks: number;
-  price: number | null;
-  initialprice: number | null;
+  price: string | number | null;
+  initialprice: string | number | null;
   discount: number | null;
   ccu: number;
   languages: string | null;

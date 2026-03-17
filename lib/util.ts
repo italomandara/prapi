@@ -121,7 +121,6 @@ export function processData(data: SteamStoreGameData[]): SteamStoreGameData[] {
   return Object.values(data).map(
     ({ data }) =>
       new ProcessData(data)
-        .fixPriceNonInt()
         .fixNonNullRequirements()
         .NoRepeatedRequirementsTitles()
         .disambiguateRequiredAge()
@@ -161,8 +160,8 @@ export function mapSteampyDataToStoreAPIResponse(
       demos: [],
       price_overview: {
         currency: "USD",
-        initial: data.price ?? 0,
-        final: data.price ?? 0,
+        initial: Number(data.price) ?? 0,
+        final: Number(data.price) ?? 0,
         discount_percent: data.discount ?? 0,
         initial_formatted: data.price
           ? `$${(data.price / 100).toFixed(2)}`
