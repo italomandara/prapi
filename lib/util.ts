@@ -162,12 +162,12 @@ export function mapSteampyDataToStoreAPIResponse(
         currency: "USD",
         initial: Number(data.price) ?? 0,
         final: Number(data.price) ?? 0,
-        discount_percent: data.discount ?? 0,
+        discount_percent: Number(data.discount) ?? 0,
         initial_formatted: data.price
-          ? `$${(data.price / 100).toFixed(2)}`
+          ? `$${(Number(data.price) / 100).toFixed(2)}`
           : "Free",
         final_formatted: data.price
-          ? `$${(data.price / 100).toFixed(2)}`
+          ? `$${(Number(data.price) / 100).toFixed(2)}`
           : "Free",
       },
       packages: [],
