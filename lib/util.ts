@@ -100,6 +100,18 @@ class ProcessData {
     return this;
   }
 
+  public fixPriceNonInt() {
+    this.data = {
+      ...this.data,
+      price_overview: {
+        ...this.data.price_overview,
+        initial: Number(this.data.price_overview.initial) || 0,
+        final: Number(this.data.price_overview.final) || 0,
+      },
+    };
+    return this;
+  }
+
   public get processedData() {
     return this.data;
   }
@@ -109,6 +121,7 @@ export function processData(data: SteamStoreGameData[]): SteamStoreGameData[] {
   return Object.values(data).map(
     ({ data }) =>
       new ProcessData(data)
+        .fixPriceNonInt()
         .fixNonNullRequirements()
         .NoRepeatedRequirementsTitles()
         .disambiguateRequiredAge()
@@ -150,7 +163,7 @@ export function mapSteampyDataToStoreAPIResponse(
         currency: "USD",
         initial: data.price ?? 0,
         final: data.price ?? 0,
-        discount_percent: 0,
+        discount_percent: data.discount ?? 0,
         initial_formatted: data.price
           ? `$${(data.price / 100).toFixed(2)}`
           : "Free",
