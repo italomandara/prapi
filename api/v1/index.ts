@@ -1,6 +1,9 @@
 import axios from "axios";
 import { requireApiKey } from "../../lib/auth.js";
-import { processData } from "../../lib/util.js";
+import {
+  mapSteampyDataToStoreAPIResponse,
+  processData,
+} from "../../lib/util.js";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import type { SteamStoreAPIResponse } from "../../types/steam.types.js";
 import {
@@ -8,6 +11,7 @@ import {
   CACHE_STALE_REVALIDATE,
   SteamAppInfoEndpoint,
 } from "../../constants.js";
+import type { SteamSpyGameData } from "../../types/steamSpy.types.js";
 
 const API_ROOT = process.env.API_ROOT;
 
@@ -28,8 +32,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       data: processData(data),
     };
     return res.json(JSONresponse);
+  } else {
+    const data: SteamSpyGameData = await axios.get(
+      `https://steamspy.com/api.php?request=appdetails&appid=${appid}`,
+    );
+    if (data.name) {
+      return res.json(mapSteampyDataToStoreAPIResponse(data));
+    } else {
+      return res.json({
+        data: [],
+      });
+    }
   }
-  return res.json({
-    data: [],
-  });
 }
+
+//https://steamspy.com/api.php?request=appdetails&appid={id}
+
+// http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=440&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&steamid=76561197972495328

@@ -1,7 +1,7 @@
 import type { Nullable } from "./util.types.js";
 
 type Category = { id: number; description: string };
-type Genre = { id: number; description: string };
+type Genre = { id: string; description: string };
 type Sub = {
   packageid: number;
   percent_savings_text: string;
@@ -9,7 +9,7 @@ type Sub = {
   option_text: string;
   option_description: string;
   can_get_free_license: string;
-  is_free_license: true;
+  is_free_license: boolean;
   price_in_cents_with_discount: number;
 };
 
@@ -30,7 +30,7 @@ type Movie = {
   dash_av1: string;
   dash_h264: string;
   hls_h264: string;
-  highlight: true;
+  highlight: boolean;
 };
 
 type HLight = {
@@ -49,73 +49,83 @@ type Screenshot = {
   path_full: string;
 };
 
+type Rating = {
+  rating_generated?: string;
+  rating: string;
+  required_age?: string;
+  banned?: string;
+  use_age_gate?: string;
+  descriptors?: string;
+};
+
+type Demo = {
+  appid: number;
+  description: string;
+};
+
+type PriceOverview = {
+  currency: string;
+  initial: number;
+  final: number;
+  discount_percent: number;
+  initial_formatted: string;
+  final_formatted: string;
+};
+
+export type SteamStoreGameItem = {
+  type: string;
+  name: string;
+  steam_appid: number;
+  required_age: number | string;
+  is_free: boolean;
+  controller_support: string;
+  demos: Demo[];
+  price_overview: PriceOverview;
+  legal_notice: string;
+  dlc: number[];
+  detailed_description: string;
+  about_the_game: string;
+  short_description: string;
+  supported_languages: string;
+  header_image: string;
+  capsule_image: string;
+  capsule_imagev5: string;
+  website: string;
+  pc_requirements: Nullable<Requirement>;
+  mac_requirements: Nullable<Requirement>;
+  linux_requirements: Nullable<Requirement>;
+  developers: string[];
+  publishers: string[];
+  packages: number[];
+  package_groups: PackageGroup[];
+  platforms: { windows: boolean; mac: boolean; linux: boolean };
+  metacritic?: {
+    score: number;
+    url: string;
+  };
+  categories: Category[];
+  genres: Genre[];
+  screenshots: Screenshot[];
+  movies: Movie[];
+  recommendations: { total: number };
+  achievements: {
+    total: number;
+    highlighted: HLight[];
+  };
+  release_date: { coming_soon: boolean; date: string };
+  support_info: {
+    url: string;
+    email: string;
+  };
+  background: string;
+  background_raw: string;
+  content_descriptors: { ids: number[]; notes: string | null };
+  ratings: Record<string, Rating>;
+};
+
 export type SteamStoreGameData = {
   success: boolean;
-  data: {
-    type: string;
-    name: string;
-    steam_appid: number;
-    required_age: number | string;
-    is_free: boolean;
-    dlc: number[];
-    detailed_description: string;
-    about_the_game: string;
-    short_description: string;
-    supported_languages: string;
-    header_image: string;
-    capsule_image: string;
-    capsule_imagev5: string;
-    website: string;
-    pc_requirements: Nullable<Requirement>;
-    mac_requirements: Nullable<Requirement>;
-    linux_requirements: Nullable<Requirement>;
-    developers: string[];
-    publishers: string[];
-    packages: number[];
-    package_groups: PackageGroup[];
-    platforms: { windows: true; mac: false; linux: true };
-    metacritic: {
-      score: number;
-      url: string;
-    };
-    categories: Category[];
-    genres: Genre[];
-    screenshots: Screenshot[];
-    movies: Movie[];
-    recommendations: { total: number };
-    achievements: {
-      total: number;
-      highlighted: HLight[];
-    };
-    release_date: { coming_soon: false; date: string };
-    support_info: {
-      url: string;
-      email: string;
-    };
-    background: string;
-    background_raw: string;
-    content_descriptors: { ids: number[]; notes: string | null };
-    ratings: {
-      usk: { rating: string };
-      agcom: { rating: string; descriptors: string };
-      dejus: {
-        rating_generated: string;
-        rating: string;
-        required_age: string;
-        banned: string;
-        use_age_gate: string;
-        descriptors: string;
-      };
-      steam_germany: {
-        rating_generated: string;
-        rating: string;
-        required_age: string;
-        banned: string;
-        use_age_gate: string;
-        descriptors: string;
-      };
-    };
-  };
+  data: SteamStoreGameItem;
 };
 
 export type SteamStoreAPIResponse = {
