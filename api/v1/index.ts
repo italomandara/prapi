@@ -37,7 +37,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `https://steamspy.com/api.php?request=appdetails&appid=${appid}`,
     );
     if (data.name) {
-      return res.json(mapSteampyDataToStoreAPIResponse(data));
+      return res.json({
+        data: mapSteampyDataToStoreAPIResponse(data),
+      });
     } else {
       return res.json({
         data: [],
