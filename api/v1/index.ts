@@ -33,7 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     };
     return res.json(JSONresponse);
   } else {
-    const data: SteamSpyGameData = await axios.get(
+    const { data }: { data: SteamSpyGameData } = await axios.get(
       `https://steamspy.com/api.php?request=appdetails&appid=${appid}`,
     );
     if (data.name) {
