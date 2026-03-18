@@ -158,7 +158,7 @@ export function mapSteampyDataToStoreAPIResponse(
       about_the_game: "No description available",
       short_description: "No description available",
       supported_languages: "English",
-      header_image: `https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${data.appid}/header.jpg/`,
+      header_image: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${data.appid}/header.jpg?t=1769931675`,
       capsule_image: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${data.appid}/capsule_231x87.jpg?t=1769931675`,
       capsule_imagev5: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${data.appid}/capsule_184x69.jpg?t=1769931675`,
       website: "",
