@@ -7,6 +7,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
 
   res.status(200).json({
     data: {
+      id: "588650",
       name: "Dead Cells",
       header_image:
         "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/588650/header.jpg?t=1772726488",
