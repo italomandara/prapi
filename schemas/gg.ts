@@ -90,7 +90,7 @@ export const gameSchema = {
       items: {
         type: SchemaType.OBJECT,
         properties: {
-          id: { type: SchemaType.NUMBER },
+          id: { type: SchemaType.STRING },
           description: { type: SchemaType.STRING },
         },
       },
