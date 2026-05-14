@@ -310,10 +310,8 @@ const model = genAI.getGenerativeModel({
   systemInstruction: `
     You are a game metadata service. 
     Step 1: Identify the game from the file path. 
-    Step 2: Use the Google Search tool with the query: '{game_name}' official game database header image.
-    Step 3: From the search results, visit the first link from a trusted database (e.g., SteamDB, IGDB, or SteamGridDB).
-    Step 4: Extract the direct image URL for the header. If the URL found ends in .jpg, .png, or .webp, use it. Do not use a landing page URL."
-    Step 5: Return the data in the requested JSON format.
+    Step 2: Use the Google Search tool with the query: '{game_name}' game database header image.
+    Step 3: Return the data in the requested JSON format.
   `,
 });
 
