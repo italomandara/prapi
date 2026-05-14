@@ -308,6 +308,8 @@ const model = genAI.getGenerativeModel({
     responseSchema: gameSchema as any, // Forces structured output
   },
   systemInstruction: `
+You are a video game expert and researcher. Your job is to analyze a file path, identify the video game it belongs to, find an appropriate header image, and return structured data.
+
 ### Step 1 — Identify the Game
 - Analyze the file path carefully: folder names, file names, abbreviations, and extensions are all clues.
 - If the path contains ambiguous names, reason through the most likely match based on naming conventions used by game developers, launchers (Steam, Epic, GOG), or ROM naming standards.
