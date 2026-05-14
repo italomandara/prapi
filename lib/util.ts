@@ -236,31 +236,26 @@ const mock = {
   data: {
     id: "588650",
     is_native: false,
-    download_progress: 0.0,
-    is_installed: false,
+    download_progress: 100,
+    is_installed: true,
     app_names: [],
-    is_custom: false,
+    is_custom: true,
 
     type: "game",
-    name: "Dead Cells",
+    name: "Game Name",
     steam_app_id: 588650,
     required_age: "0",
     is_free: false,
     controller_support: "full",
     dlc: [],
 
-    detailed_description:
-      "Dead Cells is a roguelite, metroidvania inspired, action-platformer. You'll explore a sprawling, ever-changing castle... assuming you're able to fight your way past its keepers in 2D souls-lite combat. No checkpoints. Kill, die, learn, repeat.",
-    about_the_game:
-      "Dead Cells is a roguelite, metroidvania inspired, action-platformer. You'll explore a sprawling, ever-changing castle... assuming you're able to fight your way past its keepers in 2D souls-lite combat. No checkpoints. Kill, die, learn, repeat.",
-    short_description:
-      "Dead Cells is a roguelite, metroidvania inspired, action-platformer. You'll explore a sprawling, ever-changing castle... assuming you're able to fight your way past its keepers in 2D souls-lite combat. No checkpoints. Kill, die, learn, repeat.",
+    detailed_description: "",
+    about_the_game: "",
+    short_description: "",
     supported_languages: null,
 
-    header_image:
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/588650/header.jpg?t=1772726488",
-    capsule_image:
-      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/588650/capsule_616x353.jpg",
+    header_image: "",
+    capsule_image: "",
     capsule_image_v5: null,
     website: null,
 
@@ -269,8 +264,8 @@ const mock = {
     linux_requirements: null,
 
     legal_notice: null,
-    developers: ["Motion Twin"],
-    publishers: ["Motion Twin"],
+    developers: ["Developer"],
+    publishers: ["Publisher"],
 
     price_overview: null,
     packages: [],
@@ -284,24 +279,9 @@ const mock = {
 
     metacritic: null,
 
-    categories: [
-      { id: 2, description: "Single-player" },
-      { id: 22, description: "Steam Achievements" },
-      { id: 28, description: "Full controller support" },
-      { id: 29, description: "Steam Trading Cards" },
-      { id: 30, description: "Steam Workshop" },
-      { id: 23, description: "Steam Cloud" },
-      { id: 41, description: "Remote Play on Phone" },
-      { id: 42, description: "Remote Play on Tablet" },
-      { id: 43, description: "Remote Play on TV" },
-      { id: 62, description: "Family Sharing" },
-    ],
+    categories: [{ id: 2, description: "Single-player" }],
 
-    genres: [
-      { id: "1", description: "Action" },
-      { id: "25", description: "Adventure" },
-      { id: "23", description: "Indie" },
-    ],
+    genres: [{ id: "1", description: "Action" }],
 
     screenshots: null,
     movies: null,
@@ -336,5 +316,6 @@ const model = genAI.getGenerativeModel({
 export async function getGameMetadata(filePath: string) {
   const prompt = `Return the metadata for the game at this path: ${filePath}`;
   const result = await model.generateContent(prompt);
-  return JSON.parse(result.response.text());
+  const gameData = JSON.parse(result.response.text());
+  return { ...mock, ...gameData };
 }

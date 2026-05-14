@@ -6,25 +6,25 @@ export const gameSchema = {
   properties: {
     // Basic Info
     id: { type: SchemaType.STRING },
-    is_native: { type: SchemaType.BOOLEAN },
-    download_progress: { type: SchemaType.NUMBER },
-    is_installed: { type: SchemaType.BOOLEAN },
-    app_names: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
-    app_exe_url: { type: SchemaType.STRING, nullable: true }, // URL?
-    is_custom: { type: SchemaType.BOOLEAN, nullable: true }, // Bool?
+    // is_native: { type: SchemaType.BOOLEAN },
+    // download_progress: { type: SchemaType.NUMBER },
+    // is_installed: { type: SchemaType.BOOLEAN },
+    // app_names: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+    // app_exe_url: { type: SchemaType.STRING, nullable: true }, // URL?
+    // is_custom: { type: SchemaType.BOOLEAN, nullable: true }, // Bool?
 
     // Steam-derived Info
-    type: { type: SchemaType.STRING },
+    // type: { type: SchemaType.STRING },
     name: { type: SchemaType.STRING },
-    steam_app_id: { type: SchemaType.NUMBER }, // Int
+    // steam_app_id: { type: SchemaType.NUMBER }, // Int
     required_age: { type: SchemaType.STRING },
     is_free: { type: SchemaType.BOOLEAN },
     controller_support: { type: SchemaType.STRING, nullable: true }, // String?
-    dlc: {
-      type: SchemaType.ARRAY,
-      items: { type: SchemaType.NUMBER },
-      nullable: true,
-    }, // [Int]?
+    // dlc: {
+    //   type: SchemaType.ARRAY,
+    //   items: { type: SchemaType.NUMBER },
+    //   nullable: true,
+    // }, // [Int]?
 
     // Descriptions
     detailed_description: { type: SchemaType.STRING },
@@ -34,8 +34,8 @@ export const gameSchema = {
 
     // Images & Links
     header_image: { type: SchemaType.STRING },
-    capsule_image: { type: SchemaType.STRING },
-    capsule_image_v5: { type: SchemaType.STRING, nullable: true }, // String?
+    // capsule_image: { type: SchemaType.STRING },
+    // capsule_image_v5: { type: SchemaType.STRING, nullable: true }, // String?
     website: { type: SchemaType.STRING, nullable: true }, // String?
 
     // Requirements (Objects)
@@ -49,17 +49,17 @@ export const gameSchema = {
     publishers: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
 
     // Financials
-    price_overview: { type: SchemaType.OBJECT, nullable: true },
-    packages: {
-      type: SchemaType.ARRAY,
-      items: { type: SchemaType.NUMBER },
-      nullable: true,
-    },
-    package_groups: {
-      type: SchemaType.ARRAY,
-      items: { type: SchemaType.OBJECT },
-      nullable: true,
-    },
+    // price_overview: { type: SchemaType.OBJECT, nullable: true },
+    // packages: {
+    //   type: SchemaType.ARRAY,
+    //   items: { type: SchemaType.NUMBER },
+    //   nullable: true,
+    // },
+    // package_groups: {
+    //   type: SchemaType.ARRAY,
+    //   items: { type: SchemaType.OBJECT },
+    //   nullable: true,
+    // },
 
     // Platforms
     platforms: {
@@ -72,7 +72,7 @@ export const gameSchema = {
       required: ["windows", "mac", "linux"],
     },
 
-    metacritic: { type: SchemaType.OBJECT, nullable: true },
+    // metacritic: { type: SchemaType.OBJECT, nullable: true },
 
     // Taxonomy
     categories: {
@@ -92,33 +92,33 @@ export const gameSchema = {
     },
 
     // Media
-    screenshots: {
-      type: SchemaType.ARRAY,
-      items: { type: SchemaType.OBJECT },
-      nullable: true,
-    },
-    movies: {
-      type: SchemaType.ARRAY,
-      items: { type: SchemaType.OBJECT },
-      nullable: true,
-    },
+    // screenshots: {
+    //   type: SchemaType.ARRAY,
+    //   items: { type: SchemaType.OBJECT },
+    //   nullable: true,
+    // },
+    // movies: {
+    //   type: SchemaType.ARRAY,
+    //   items: { type: SchemaType.OBJECT },
+    //   nullable: true,
+    // },
 
     // Extra Data
-    recommendations: { type: SchemaType.OBJECT, nullable: true },
-    achievements: { type: SchemaType.OBJECT, nullable: true },
-    release_date: {
-      type: SchemaType.OBJECT,
-      properties: {
-        coming_soon: { type: SchemaType.BOOLEAN },
-        date: { type: SchemaType.STRING },
-      },
-      required: ["coming_soon", "date"],
-    },
-    support_info: { type: SchemaType.OBJECT, nullable: true },
-    background: { type: SchemaType.STRING, nullable: true },
-    background_raw: { type: SchemaType.STRING, nullable: true },
-    content_descriptors: { type: SchemaType.OBJECT, nullable: true },
-    ratings: { type: SchemaType.OBJECT, nullable: true }, // Dictionary [String: RatingBody]
+    // recommendations: { type: SchemaType.OBJECT, nullable: true },
+    // achievements: { type: SchemaType.OBJECT, nullable: true },
+    // release_date: {
+    //   type: SchemaType.OBJECT,
+    //   properties: {
+    //     coming_soon: { type: SchemaType.BOOLEAN },
+    //     date: { type: SchemaType.STRING },
+    //   },
+    //   required: ["coming_soon", "date"],
+    // },
+    // support_info: { type: SchemaType.OBJECT, nullable: true },
+    // background: { type: SchemaType.STRING, nullable: true },
+    // background_raw: { type: SchemaType.STRING, nullable: true },
+    // content_descriptors: { type: SchemaType.OBJECT, nullable: true },
+    // ratings: { type: SchemaType.OBJECT, nullable: true }, // Dictionary [String: RatingBody]
   },
   required: [
     "id",
