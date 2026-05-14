@@ -307,8 +307,13 @@ const model = genAI.getGenerativeModel({
     responseMimeType: "application/json",
     responseSchema: gameSchema as any, // Forces structured output
   },
-  systemInstruction:
-    "You are a specialized game database service. Analyze the provided file path and return the game details in JSON. If a game is not on Steam, return is_custom: true and steam_app_id: 0. Ensure all image URLs are valid public HTTP links.",
+  systemInstruction: `
+    You are a game metadata service. 
+    Step 1: Identify the game from the file path. 
+    Step 2: Use Google Search to find the official website or Steam page for that game. 
+    Step 3: Extract a valid, high-quality HTTP URL for the 'header_image' and 'capsule_image'. 
+    Step 4: Return the data in the requested JSON format.
+  `,
 });
 
 export async function getGameMetadata(hints: string) {
