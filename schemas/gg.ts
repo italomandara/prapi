@@ -1,6 +1,6 @@
 import { SchemaType } from "@google/generative-ai";
 
-const gameSchema = {
+export const gameSchema = {
   type: SchemaType.OBJECT,
   description: "Exhaustive game metadata matching Swift Game struct",
   properties: {
