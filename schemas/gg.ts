@@ -87,7 +87,13 @@ export const gameSchema = {
     },
     genres: {
       type: SchemaType.ARRAY,
-      items: { type: SchemaType.OBJECT },
+      items: {
+        type: SchemaType.OBJECT,
+        properties: {
+          id: { type: SchemaType.NUMBER },
+          description: { type: SchemaType.STRING },
+        },
+      },
       nullable: true,
     },
 

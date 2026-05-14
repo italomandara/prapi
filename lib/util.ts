@@ -233,7 +233,7 @@ export function mapSteampyDataToStoreAPIResponse(
 }
 
 const mock = {
-  id: "588650",
+  id: "0",
   is_native: false,
   download_progress: 100,
   is_installed: true,
@@ -242,7 +242,7 @@ const mock = {
 
   type: "game",
   name: "Game Name",
-  steam_app_id: 588650,
+  steam_app_id: 0,
   required_age: "0",
   is_free: false,
   controller_support: "full",
@@ -311,8 +311,8 @@ const model = genAI.getGenerativeModel({
     "You are a specialized game database service. Analyze the provided file path and return the game details in JSON. If a game is not on Steam, return is_custom: true and steam_app_id: 0. Ensure all image URLs are valid public HTTP links.",
 });
 
-export async function getGameMetadata(filePath: string) {
-  const prompt = `Return the metadata for the game at this path: ${filePath}`;
+export async function getGameMetadata(hints: string) {
+  const prompt = `Return the metadata for the game at this path: ${hints}`;
   const result = await model.generateContent(prompt);
   const gameData = JSON.parse(result.response.text());
   return { ...mock, ...gameData };
