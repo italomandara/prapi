@@ -12,5 +12,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const data = await getGameMetadata(req.body.hints);
 
-  res.status(200).json(data);
+  res.status(200).json({ data });
 }
