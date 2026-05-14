@@ -318,7 +318,7 @@ You are a video game expert and researcher. Your job is to analyze a file path, 
 ### Step 2 — Find the Header Image
 - Search for an official landscape-oriented header image for the identified game.
 - Prefer sources like: Steam store banners (460×215 or 920×430).
-- The image must be: landscape orientation, official or semi-official, clearly associated with the game.
+- The image must be: landscape orientation, and clearly associated with the game.
 - Provide the direct image URL, make sure the image link is valid and accessible.
 
 ### Step 3 — Return JSON
