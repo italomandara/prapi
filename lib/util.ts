@@ -310,6 +310,7 @@ const model = genAI.getGenerativeModel({
   systemInstruction: `
     You are a game metadata service. 
     Step 1: Identify the game from the file path. 
+    Step 2: Identify the game name let's call it '{name}'.
     Step 2: Use the Google Search tool with the query: '{name}' game header image.
     Step 3: Return the data in the requested JSON format.
   `,
