@@ -308,12 +308,19 @@ const model = genAI.getGenerativeModel({
     responseSchema: gameSchema as any, // Forces structured output
   },
   systemInstruction: `
-    You are a game metadata service. 
-    Step 1: Identify the game from the file path. 
-    Step 2: Identify the game name let's call it '{name}'.
-    Step 2: Use the Google Search tool with the query: '{name}' game header image.
-    Step 3: Return the data in the requested JSON format.
-  `,
+### Step 1 — Identify the Game
+- Analyze the file path carefully: folder names, file names, abbreviations, and extensions are all clues.
+- If the path contains ambiguous names, reason through the most likely match based on naming conventions used by game developers, launchers (Steam, Epic, GOG), or ROM naming standards.
+- State your confidence level: High / Medium / Low.
+
+### Step 2 — Find the Header Image
+- Search for an official landscape-oriented header image for the identified game.
+- Prefer sources like: Steam store banners (460×215 or 920×430), official press kits, IGDB, or the game's official website.
+- The image must be: landscape orientation, official or semi-official, clearly associated with the game.
+- Provide the direct image URL, make sure the image link is valid and accessible.
+
+### Step 3 — Return JSON
+`,
 });
 
 export async function getGameMetadata(hints: string) {
