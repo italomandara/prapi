@@ -327,7 +327,7 @@ const model = genAI.getGenerativeModel({
   model: "gemini-3-flash", // High speed, low cost for metadata
   generationConfig: {
     responseMimeType: "application/json",
-    responseSchema: gameSchema, // Forces structured output
+    responseSchema: gameSchema as any, // Forces structured output
   },
   systemInstruction:
     "You are a specialized game database service. Analyze the provided file path and return the game details in JSON. If a game is not on Steam, return is_custom: true and steam_app_id: 0. Ensure all image URLs are valid public HTTP links.",
