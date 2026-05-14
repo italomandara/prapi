@@ -233,73 +233,71 @@ export function mapSteampyDataToStoreAPIResponse(
 }
 
 const mock = {
-  data: {
-    id: "588650",
-    is_native: false,
-    download_progress: 100,
-    is_installed: true,
-    app_names: [],
-    is_custom: true,
+  id: "588650",
+  is_native: false,
+  download_progress: 100,
+  is_installed: true,
+  app_names: [],
+  is_custom: true,
 
-    type: "game",
-    name: "Game Name",
-    steam_app_id: 588650,
-    required_age: "0",
-    is_free: false,
-    controller_support: "full",
-    dlc: [],
+  type: "game",
+  name: "Game Name",
+  steam_app_id: 588650,
+  required_age: "0",
+  is_free: false,
+  controller_support: "full",
+  dlc: [],
 
-    detailed_description: "",
-    about_the_game: "",
-    short_description: "",
-    supported_languages: null,
+  detailed_description: "",
+  about_the_game: "",
+  short_description: "",
+  supported_languages: null,
 
-    header_image: "",
-    capsule_image: "",
-    capsule_image_v5: null,
-    website: null,
+  header_image: "",
+  capsule_image: "",
+  capsule_image_v5: null,
+  website: null,
 
-    pc_requirements: null,
-    mac_requirements: null,
-    linux_requirements: null,
+  pc_requirements: null,
+  mac_requirements: null,
+  linux_requirements: null,
 
-    legal_notice: null,
-    developers: ["Developer"],
-    publishers: ["Publisher"],
+  legal_notice: null,
+  developers: ["Developer"],
+  publishers: ["Publisher"],
 
-    price_overview: null,
-    packages: [],
-    package_groups: [],
+  price_overview: null,
+  packages: [],
+  package_groups: [],
 
-    platforms: {
-      windows: true,
-      mac: true,
-      linux: true,
-    },
-
-    metacritic: null,
-
-    categories: [{ id: 2, description: "Single-player" }],
-
-    genres: [{ id: "1", description: "Action" }],
-
-    screenshots: null,
-    movies: null,
-
-    recommendations: null,
-    achievements: null,
-
-    release_date: {
-      coming_soon: false,
-      date: "2018-08-06",
-    },
-
-    support_info: null,
-    background: null,
-    background_raw: null,
-    content_descriptors: null,
-    ratings: null,
+  platforms: {
+    windows: true,
+    mac: true,
+    linux: true,
   },
+
+  metacritic: null,
+
+  categories: [{ id: 2, description: "Single-player" }],
+
+  genres: [{ id: "1", description: "Action" }],
+
+  screenshots: null,
+  movies: null,
+
+  recommendations: null,
+  achievements: null,
+
+  release_date: {
+    coming_soon: false,
+    date: "2018-08-06",
+  },
+
+  support_info: null,
+  background: null,
+  background_raw: null,
+  content_descriptors: null,
+  ratings: null,
 };
 
 const genAI = new GoogleGenerativeAI(process.env.AIS_KEY || "");
