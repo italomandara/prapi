@@ -4,6 +4,8 @@ import type {
   SteamStoreGameItem,
 } from "../types/steam.types.js";
 import type { SteamSpyGameData } from "../types/steamSpy.types.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { gameSchema } from "../schemas/gg.js";
 
 class ProcessData {
   private data: SteamStoreGameData["data"];
@@ -229,9 +231,6 @@ export function mapSteampyDataToStoreAPIResponse(
     },
   ];
 }
-
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { gameSchema } from "../../../schemas/gg.js";
 
 const mock = {
   data: {
