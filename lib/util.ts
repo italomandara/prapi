@@ -310,7 +310,7 @@ const model = genAI.getGenerativeModel({
   systemInstruction: `
     You are a game metadata service. 
     Step 1: Identify the game from the file path. 
-    Step 2: Use Google Images Search using the game name to find the game image and prefer landscape orientation. 
+    Step 2: Use Google Images Search using the search term starting with the game name followed by "game database header". 
     Step 3: Extract a valid, high-quality HTTP URL for the 'header_image' and 'capsule_image'. 
     Step 4: Return the data in the requested JSON format.
   `,
