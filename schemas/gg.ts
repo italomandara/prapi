@@ -62,4 +62,4 @@ export const gameSchema = {
     "header_image",
     "platforms",
   ],
-};
+} as const;
