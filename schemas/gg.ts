@@ -122,7 +122,7 @@ export const gameSchema = {
   },
   required: [
     // "id",
-    "is_native",
+    // "is_native",
     // "download_progress",
     // "is_installed",
     // "app_names",
