@@ -315,7 +315,7 @@ const model = genAI.getGenerativeModel({
 });
 
 export async function getGoogleGameMetadata(hints: string) {
-  const prompt = `Return the metadata for the game at this path: ${hints}`;
+  const prompt = `Return the metadata for the game with this path: ${hints}`;
   const result = await model.generateContent(prompt);
   const gameData = JSON.parse(result.response.text());
   return { ...mock, ...gameData };
