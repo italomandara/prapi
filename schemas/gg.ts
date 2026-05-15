@@ -16,7 +16,7 @@ export const gameSchema = {
     // Steam-derived Info
     // type: { type: SchemaType.STRING },
     name: { type: SchemaType.STRING },
-    // steam_app_id: { type: SchemaType.NUMBER }, // Int
+    steam_app_id: { type: SchemaType.NUMBER }, // Int
     required_age: { type: SchemaType.STRING },
     is_free: { type: SchemaType.BOOLEAN },
     controller_support: { type: SchemaType.STRING, nullable: true }, // String?
@@ -134,7 +134,7 @@ export const gameSchema = {
     // "app_names",
     // "type",
     "name",
-    // "steam_app_id",
+    "steam_app_id",
     "required_age",
     "is_free",
     "detailed_description",
