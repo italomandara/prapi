@@ -320,7 +320,7 @@ You are a video game expert and researcher. Your job is to analyze a file path, 
 - Search on the web for the identified game, using the game name from the JSON followed by "game header image or banner" and keep 5 results.
 - From results prefer official landscape-oriented header image for the identified game.
 - Prefer images from any game database and not official websites.
-- Prefer sources like: Steam store banners (460×215 or 920×430).
+- Prefer sources with dimensions around 460×215 or 920×430.
 - Analyze images and prefer images that have the game title inside in the image.
 - The image must be: landscape orientation, and clearly associated with the game.
 - Provide the direct image URL, make sure the image link is valid and accessible.
