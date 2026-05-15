@@ -320,7 +320,7 @@ export async function getGoogleGameMetadata(hints: string) {
   return { ...mock, ...gameData };
 }
 
-const groq = createGroq({ apiKey: process.env.GROQ_API_KEY || "" });
+const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
 
 export async function getGameMetadata(hints: string) {
   const { object: gameData } = await generateObject({
