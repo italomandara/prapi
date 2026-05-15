@@ -133,6 +133,7 @@ export const gameSchemaJSON = {
     },
   },
   required: [
+    "steam_app_id",
     "name",
     "required_age",
     "is_free",
@@ -151,6 +152,7 @@ export const gameSchemaJSON = {
 export const gameSchemaJSON2 = jsonSchema<Record<string, any>>({
   type: "object",
   properties: {
+    steam_app_id: { type: "number" },
     name: { type: "string" },
     required_age: { type: "string" },
     is_free: { type: "boolean" },

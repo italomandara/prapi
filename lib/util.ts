@@ -246,7 +246,7 @@ const mock = {
 
   type: "game",
   name: "Game Name",
-  steam_app_id: 0,
+  // steam_app_id: 0,
   required_age: "0",
   is_free: false,
   controller_support: "full",
