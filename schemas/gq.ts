@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { jsonSchema } from "ai";
 
 export const gameSchema = z.object({
   name: z.string(),
@@ -60,7 +61,7 @@ export const gameSchema = z.object({
 
 export type Game = z.infer<typeof gameSchema>;
 
-export const gameSchemaOld = {
+export const gameSchemaJSON = {
   type: "object",
   description: "Exhaustive game metadata matching Swift Game struct",
   properties: {
@@ -146,3 +147,81 @@ export const gameSchemaOld = {
   ],
   additionalProperties: false,
 } as const;
+
+export const gameSchemaJSON2 = jsonSchema<Record<string, any>>({
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    required_age: { type: "string" },
+    is_free: { type: "boolean" },
+    controller_support: { type: ["string", "null"] },
+    detailed_description: { type: "string" },
+    about_the_game: { type: "string" },
+    short_description: { type: "string" },
+    supported_languages: { type: ["string", "null"] },
+    header_image: { type: "string" },
+    website: { type: ["string", "null"] },
+    pc_requirements: { type: "null" },
+    mac_requirements: { type: "null" },
+    linux_requirements: { type: "null" },
+    legal_notice: { type: ["string", "null"] },
+    developers: { type: "array", items: { type: "string" } },
+    publishers: { type: "array", items: { type: "string" } },
+    platforms: {
+      type: "object",
+      properties: {
+        windows: { type: "boolean" },
+        mac: { type: "boolean" },
+        linux: { type: "boolean" },
+      },
+      required: ["windows", "mac", "linux"],
+      additionalProperties: false,
+    },
+    categories: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          id: { type: "number" },
+          description: { type: "string" },
+        },
+        required: ["id", "description"],
+        additionalProperties: false,
+      },
+    },
+    genres: {
+      type: ["array", "null"],
+      items: {
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          description: { type: "string" },
+        },
+        required: ["id", "description"],
+        additionalProperties: false,
+      },
+    },
+  },
+  required: [
+    "name",
+    "required_age",
+    "is_free",
+    "controller_support",
+    "detailed_description",
+    "about_the_game",
+    "short_description",
+    "supported_languages",
+    "header_image",
+    "website",
+    "pc_requirements",
+    "mac_requirements",
+    "linux_requirements",
+    "legal_notice",
+    "developers",
+    "publishers",
+    "platforms",
+    "categories",
+    "genres",
+  ],
+  additionalProperties: false,
+} as const);

@@ -5,7 +5,8 @@ import type {
 } from "../types/steam.types.js";
 import type { SteamSpyGameData } from "../types/steamSpy.types.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { gameSchema } from "../schemas/gq.js";
+import { gameSchemaJSON2 } from "../schemas/gq.js";
+import { gameSchema } from "../schemas/gg.js";
 import { createGroq } from "@ai-sdk/groq";
 import { generateObject } from "ai";
 import { systemInstruction } from "../schemas/instructions.js";
@@ -325,7 +326,7 @@ const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
 export async function getGameMetadata(hints: string) {
   const { object: gameData } = await generateObject({
     model: groq("meta-llama/llama-4-scout-17b-16e-instruct"),
-    schema: gameSchema, // Use the same schema for validation
+    schema: gameSchemaJSON2, // Use the same schema for validation
     system: systemInstruction,
     prompt: `\n\n### Hints:\n${hints}`,
   });
