@@ -23,10 +23,15 @@
   "homepage": "https://github.com/italomandara/prapi#readme",
   "description": "",
   "dependencies": {
+    "@ai-sdk/groq": "^3.0.39",
+    "@ai-sdk/openai": "^3.0.63",
     "@google/generative-ai": "^0.24.1",
     "@upstash/ratelimit": "^2.0.7",
     "@upstash/redis": "^1.35.8",
-    "axios": "^1.13.4"
+    "ai": "^6.0.182",
+    "axios": "^1.13.4",
+    "groq-sdk": "^1.2.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^25.2.1",

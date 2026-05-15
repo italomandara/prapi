@@ -5,7 +5,10 @@ import type {
 } from "../types/steam.types.js";
 import type { SteamSpyGameData } from "../types/steamSpy.types.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { gameSchema } from "../schemas/gg.js";
+import { gameSchema } from "../schemas/gq.js";
+import { createGroq } from "@ai-sdk/groq";
+import { generateObject } from "ai";
+import { systemInstruction } from "../schemas/instructions.js";
 
 class ProcessData {
   private data: SteamStoreGameData["data"];
@@ -307,31 +310,24 @@ const model = genAI.getGenerativeModel({
     responseMimeType: "application/json",
     responseSchema: gameSchema as any, // Forces structured output
   },
-  systemInstruction: `
-You are a video game expert and researcher. Your job is to analyze a file path, identify the video game it belongs to, find an appropriate header image, and return structured data.
-
-### Step 1 — Identify the Game
-- Analyze the file path carefully: folder names, file names, abbreviations, and extensions are all clues.
-- If the path contains ambiguous names, reason through the most likely match based on naming conventions used by game developers, launchers (Steam, Epic, GOG), or ROM naming standards.
-
-### Step 3 — Build the phase 1 JSON without the header image URL
-
-### Step 2 — Find the Header Image
-- Search on the web for the identified game, using the game name from the JSON followed by "game header image or banner" and keep 5 results.
-- From results prefer official landscape-oriented header image for the identified game.
-- Prefer images from any game database and not official websites.
-- Prefer sources with dimensions around 460×215 or 920×430.
-- Analyze images and prefer images that have the game title inside in the image.
-- The image must be: landscape orientation, and clearly associated with the game.
-- Provide the direct image URL, make sure the image link is valid and accessible.
-
-### Step 4 — Add the header image to the JSON unsing the key "header_image" and return the complete JSON with all metadata and the header image URL.
-`,
+  systemInstruction,
 });
 
-export async function getGameMetadata(hints: string) {
+export async function getGoogleGameMetadata(hints: string) {
   const prompt = `Return the metadata for the game at this path: ${hints}`;
   const result = await model.generateContent(prompt);
   const gameData = JSON.parse(result.response.text());
   return { ...mock, ...gameData };
+}
+
+const groq = createGroq({ apiKey: process.env.GROQ_API_KEY || "" });
+
+export async function getGameMetadata(hints: string) {
+  const { object: gameData } = await generateObject({
+    model: groq("llama-3.3-70b-versatile"),
+    schema: gameSchema, // Use the same schema for validation
+    prompt: systemInstruction + `\n\n### Hints:\n${hints}`,
+  });
+
+  return Response.json({ ...mock, ...gameData });
 }
