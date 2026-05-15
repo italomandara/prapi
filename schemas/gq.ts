@@ -44,6 +44,19 @@ export const gameSchema = z.object({
     )
     .nullable()
     .optional(),
+  required: [
+    "name",
+    "required_age",
+    "is_free",
+    "detailed_description",
+    "about_the_game",
+    "short_description",
+    "header_image",
+    "developers",
+    "publishers",
+    "platforms",
+    "categories",
+  ],
 });
 
 export type Game = z.infer<typeof gameSchema>;
