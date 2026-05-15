@@ -318,6 +318,7 @@ You are a video game expert and researcher. Your job is to analyze a file path, 
 ### Step 2 — Find the Header Image
 - search on the web for the identified game, using the name followed by game header image or banner.
 - Search for an official landscape-oriented header image for the identified game.
+- Prefer images from any game database and not official websites.
 - Prefer sources like: Steam store banners (460×215 or 920×430).
 - Analyze images and prefer images that have the game title inside in the image.
 - The image must be: landscape orientation, and clearly associated with the game.
