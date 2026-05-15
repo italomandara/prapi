@@ -328,7 +328,7 @@ export async function getGameMetadata(hints: string) {
     model: groq("meta-llama/llama-4-scout-17b-16e-instruct"),
     schema: gameSchemaJSON2, // Use the same schema for validation
     system: systemInstruction,
-    prompt: `\n\n### Hints:\n${hints}`,
+    prompt: `The game path is: ${hints}`,
   });
 
   return Response.json({ ...mock, ...gameData });
