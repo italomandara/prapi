@@ -11,8 +11,7 @@ You are a video game expert and researcher. Your job is to analyze a file path, 
 - Figure out the exact Steam id for the identified game name, if possible let's call it {steam_id} and le't call the game name {game_name}
 - you can try to find the steam id by searching the web for the steam game id for {game_name}, you should get the game numeric id in your first search result
 - if you find the steam id and you're confident about it, use https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/{steam_id}/header.jpg 
-- if you can't find the steam id, you can try to find the header image by searching the web for "{game_name} cover image" and use the most relevant result
-- if the game isn't a steam game, find the header image by searching the web for "{game name} header image" and use the most relevant result
+- if you can't find the steam id, use this generic header url: https://www.pcworld.com/wp-content/uploads/2025/04/generic-controller-header.jpg?resize=1024%2C576&quality=50&strip=all
 
 ### Step 4 — Add the header image to the JSON unsing the key "header_image" and return the complete JSON with all metadata and the header image URL.
 `;
