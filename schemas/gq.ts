@@ -13,9 +13,9 @@ export const gameSchema = z.object({
   website: z.string().nullable().optional(),
 
   // Requirements
-  pc_requirements: z.record(z.string(), z.unknown()).nullable().optional(),
-  mac_requirements: z.record(z.string(), z.unknown()).nullable().optional(),
-  linux_requirements: z.record(z.string(), z.unknown()).nullable().optional(),
+  pc_requirements: z.null(),
+  mac_requirements: z.null(),
+  linux_requirements: z.null(),
 
   legal_notice: z.string().nullable().optional(),
   developers: z.array(z.string()),
