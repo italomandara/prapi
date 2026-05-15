@@ -324,9 +324,10 @@ const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
 
 export async function getGameMetadata(hints: string) {
   const { object: gameData } = await generateObject({
-    model: groq("llama-3.3-70b-versatile"),
+    model: groq("gemma2-9b-it"),
     schema: gameSchema, // Use the same schema for validation
-    prompt: systemInstruction + `\n\n### Hints:\n${hints}`,
+    system: systemInstruction,
+    prompt: `\n\n### Hints:\n${hints}`,
   });
 
   return Response.json({ ...mock, ...gameData });
