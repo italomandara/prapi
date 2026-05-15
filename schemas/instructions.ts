@@ -9,6 +9,7 @@ You are a video game expert and researcher. Your job is to analyze a file path, 
 
 ### Step 2 — Find the Header Image
 - Figure out the exact Steam id for the identified game, if possible.
+- you can try to find the steam id by searching the web for the game name + steamdb.info
 - use https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/{steam_id}/header.jpg
 - let's call it {steam_id}
 
