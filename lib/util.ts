@@ -324,7 +324,7 @@ const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
 
 export async function getGameMetadata(hints: string) {
   const { object: gameData } = await generateObject({
-    model: groq("gemma2-9b-it"),
+    model: groq("moonshotai/kimi-k2-instruct-0905"),
     schema: gameSchema, // Use the same schema for validation
     system: systemInstruction,
     prompt: `\n\n### Hints:\n${hints}`,
