@@ -306,7 +306,7 @@ const mock = {
 
 const genAI = new GoogleGenerativeAI(process.env.AIS_KEY || "");
 const model = genAI.getGenerativeModel({
-  model: "gemma-4-26b-a4b-it", // High speed, low cost for metadata
+  model: "gemini-2.0-flash",
   generationConfig: {
     responseMimeType: "application/json",
     responseSchema: gameSchema as any, // Forces structured output

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getGameMetadata } from "../../../lib/util.js";
+import { getGoogleGameMetadata } from "../../../lib/util.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -10,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Missing hints in request body" });
   }
 
-  const data = await getGameMetadata(req.body.hints);
+  const data = await getGoogleGameMetadata(req.body.hints);
 
   res.status(200).json({ data });
 }
