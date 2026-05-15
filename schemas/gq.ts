@@ -4,20 +4,20 @@ export const gameSchema = z.object({
   name: z.string(),
   required_age: z.string(),
   is_free: z.boolean(),
-  controller_support: z.string().nullable().optional(),
+  controller_support: z.string().nullable(),
   detailed_description: z.string(),
   about_the_game: z.string(),
   short_description: z.string(),
-  supported_languages: z.string().nullable().optional(),
+  supported_languages: z.string().nullable(),
   header_image: z.string(),
-  website: z.string().nullable().optional(),
+  website: z.string().nullable(),
 
   // Requirements
   pc_requirements: z.null(),
   mac_requirements: z.null(),
   linux_requirements: z.null(),
 
-  legal_notice: z.string().nullable().optional(),
+  legal_notice: z.string().nullable(),
   developers: z.array(z.string()),
   publishers: z.array(z.string()),
 
@@ -42,8 +42,7 @@ export const gameSchema = z.object({
         description: z.string(),
       }),
     )
-    .nullable()
-    .optional(),
+    .nullable(),
   required: [
     "name",
     "required_age",
