@@ -4,7 +4,7 @@ import type {
   SteamStoreGameItem,
 } from "../types/steam.types.js";
 import type { SteamSpyGameData } from "../types/steamSpy.types.js";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { gameSchemaJSON2 } from "../schemas/gq.js";
 import { gameSchema } from "../schemas/gg.js";
 import { createGroq } from "@ai-sdk/groq";
@@ -304,20 +304,24 @@ const mock = {
   ratings: null,
 };
 
-const genAI = new GoogleGenerativeAI(process.env.AIS_KEY || "");
-const model = genAI.getGenerativeModel({
-  model: "gemini-3.1-flash-lite",
-  generationConfig: {
-    responseMimeType: "application/json",
-    responseSchema: gameSchema as any, // Forces structured output
-  },
-  systemInstruction,
-});
+// 1. Initialize the client (automatically looks for process.env.GEMINI_API_KEY)
+const ai = new GoogleGenAI({});
 
 export async function getGoogleGameMetadata(hints: string) {
   const prompt = `Return the metadata for the game with this path: ${hints}`;
-  const result = await model.generateContent(prompt);
-  const gameData = JSON.parse(result.response.text());
+  const result = await ai.models.generateContent({
+    model: "gemini-3.1-flash-lite",
+    contents: prompt,
+    config: {
+      systemInstruction: systemInstruction,
+      // Forces the structured schema output
+      responseMimeType: "application/json",
+      responseSchema: gameSchema as any,
+      // Passes the built-in Google Search tool
+      tools: [{ googleSearch: {} }],
+    },
+  });
+  const gameData = JSON.parse(result.text || "{}");
   return { ...mock, ...gameData };
 }
 
