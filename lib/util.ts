@@ -305,7 +305,7 @@ const mock = {
 };
 
 // 1. Initialize the client (automatically looks for process.env.GEMINI_API_KEY)
-const ai = new GoogleGenAI({});
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
 export async function getGoogleGameMetadata(hints: string) {
   const prompt = `Return the metadata for the game with this path: ${hints}`;
