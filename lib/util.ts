@@ -306,14 +306,14 @@ const mock = {
 
 // 1. Initialize the client (automatically looks for process.env.GEMINI_API_KEY)
 
-export async function getGoogleGameMetadata(hints: string) {
-  if (!process.env.AIS_KEY) {
+export async function getGoogleGameMetadata(hints: string, apiKey = "") {
+  if (!apiKey && !process.env.AIS_KEY) {
     throw new Error(
       "DEPLOYMENT ERROR: process.env.AIS_KEY is undefined. " +
         "Please check your Vercel Environment Variables and redeploy.",
     );
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.AIS_KEY });
+  const ai = new GoogleGenAI({ apiKey: apiKey || process.env.AIS_KEY || "" });
   const prompt = `Return the metadata for the game with this path: ${hints}`;
   const result = await ai.models.generateContent({
     model: "gemini-3.1-flash-lite",
