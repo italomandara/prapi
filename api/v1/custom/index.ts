@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getGoogleGameMetadata, getGameMetadata } from "../../../lib/util.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  return res.status(503).json({ error: "Service Unavailable" });
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
