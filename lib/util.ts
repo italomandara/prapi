@@ -334,20 +334,50 @@ export async function getGoogleGameMetadata(hints: string, apiKey = "") {
 // const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
 
 export async function getGameMetadata(hints: string) {
-  // const { object: gameData } = await generateObject({
-  //   model: groq("meta-llama/llama-4-scout-17b-16e-instruct"),
-  //   schema: gameSchemaJSON2, // Use the same schema for validation
-  //   system: systemInstruction,
-  //   prompt: `The game path is: ${hints}`,
-  // });
+  // Step 1: compound-beta searches the web, returns raw text
 
-  // return Response.json({ ...mock, ...gameData });
-  const response = await fetch(
+  const authString = `Bearer ${process.env.AI_GRQ_KEY}`;
+
+  const searchRes = await fetch(
     "https://api.groq.com/openai/v1/chat/completions",
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.AI_GRQ_KEY}`,
+        Authorization: authString,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "compound-beta",
+        messages: [
+          {
+            role: "system",
+            content: `Try and guess what game is from the given path, then search for the Steam game and return ALL of the following as detailed plain text:
+            - Steam app ID, full name, age rating, price (free or not)
+            - Short, detailed, and about descriptions
+            - Supported languages, header image URL, website
+            - Developer(s) and publisher(s)
+            - Platform support (Windows/Mac/Linux)
+            - PC/Mac/Linux system requirements (minimum and recommended)
+            - Categories and genres (with their IDs)
+            - Controller support, legal notices
+            Be exhaustive. Do not summarise — include every detail you find.`,
+          },
+          { role: "user", content: `Steam game path: ${hints}` },
+        ],
+      }),
+    },
+  );
+
+  const searchData = await searchRes.json();
+  const rawText = searchData.choices[0].message.content;
+
+  // Step 2: llama-3.3-70b extracts into your strict schema
+  const extractRes = await fetch(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: authString,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -355,7 +385,7 @@ export async function getGameMetadata(hints: string) {
         response_format: {
           type: "json_schema",
           json_schema: {
-            name: "game_result", // ← this was missing
+            name: "game_result",
             strict: true,
             schema: gameSchemaJSON,
           },
@@ -363,28 +393,18 @@ export async function getGameMetadata(hints: string) {
         messages: [
           {
             role: "system",
-            // content: systemInstruction,
-            content: `You are a video game database service. Your job is to analyze a file path, identify the video game it belongs to, find an appropriate Steam id if possible, and return structured data.`,
+            content:
+              "Extract the game data from the provided text into the JSON schema. Populate every field accurately. Use null for fields with no data found.",
           },
           {
             role: "user",
-            content: `Return the JSON for the game with this path: ${hints}`,
+            content: `Game research data:\n\n${rawText}`,
           },
         ],
       }),
     },
   );
-  const data = await response.json();
-  console.log(data);
-  // WRONG - assumes first block is the JSON text
-  const result = JSON.parse(data.choices[0].message.content);
 
-  // RIGHT - compound-beta may return an array of content blocks
-  const message = data.choices[0].message;
-  const content =
-    typeof message.content === "string"
-      ? message.content
-      : (message.content?.find((b: any) => b.type === "text")?.text ?? "");
-
-  return JSON.parse(content);
+  const extractData = await extractRes.json();
+  return JSON.parse(extractData.choices[0].message.content);
 }
