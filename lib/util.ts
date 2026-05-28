@@ -5,7 +5,7 @@ import type {
 } from "../types/steam.types.js";
 import type { SteamSpyGameData } from "../types/steamSpy.types.js";
 import { GoogleGenAI } from "@google/genai";
-import { gameSchemaJSON2 } from "../schemas/gq.js";
+import { gameSchemaJSON2, gameSchemaJSON } from "../schemas/gq.js";
 import { gameSchema } from "../schemas/gg.js";
 import { createGroq } from "@ai-sdk/groq";
 import { generateObject } from "ai";
@@ -316,7 +316,7 @@ export async function getGoogleGameMetadata(hints: string, apiKey = "") {
   const ai = new GoogleGenAI({ apiKey: apiKey || process.env.AIS_KEY || "" });
   const prompt = `Return the metadata for the game with this path: ${hints}`;
   const result = await ai.models.generateContent({
-    model: "gemini-3.1-flash-lite",
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       systemInstruction: systemInstruction,
@@ -331,15 +331,42 @@ export async function getGoogleGameMetadata(hints: string, apiKey = "") {
   return { ...mock, ...gameData };
 }
 
-const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
+// const groq = createGroq({ apiKey: process.env.AI_GRQ_KEY || "" });
 
 export async function getGameMetadata(hints: string) {
-  const { object: gameData } = await generateObject({
-    model: groq("meta-llama/llama-4-scout-17b-16e-instruct"),
-    schema: gameSchemaJSON2, // Use the same schema for validation
-    system: systemInstruction,
-    prompt: `The game path is: ${hints}`,
-  });
+  // const { object: gameData } = await generateObject({
+  //   model: groq("meta-llama/llama-4-scout-17b-16e-instruct"),
+  //   schema: gameSchemaJSON2, // Use the same schema for validation
+  //   system: systemInstruction,
+  //   prompt: `The game path is: ${hints}`,
+  // });
 
-  return Response.json({ ...mock, ...gameData });
+  // return Response.json({ ...mock, ...gameData });
+  const response = await fetch(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.AI_GRQ_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "compound-beta",
+        response_format: {
+          type: "json_schema",
+          json_schema: gameSchemaJSON,
+        },
+        messages: [
+          {
+            role: "system",
+            content: "Search the web and return structured product data.",
+          },
+          {
+            role: "user",
+            content: `Return the metadata for the game with this path: ${hints}`,
+          },
+        ],
+      }),
+    },
+  );
 }

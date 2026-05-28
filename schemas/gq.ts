@@ -65,36 +65,62 @@ export const gameSchemaJSON = {
   type: "object",
   description: "Exhaustive game metadata matching Swift Game struct",
   properties: {
+    steam_app_id: { type: "string" },
     name: { type: "string" },
     required_age: { type: "string" },
     is_free: { type: "boolean" },
-    controller_support: { type: ["string", "null"] },
+    controller_support: { anyOf: [{ type: "string" }, { type: "null" }] },
     detailed_description: { type: "string" },
     about_the_game: { type: "string" },
     short_description: { type: "string" },
-    supported_languages: { type: ["string", "null"] },
+    supported_languages: { anyOf: [{ type: "string" }, { type: "null" }] },
     header_image: { type: "string" },
-    website: { type: ["string", "null"] },
+    website: { anyOf: [{ type: "string" }, { type: "null" }] },
 
-    // Requirements
-    pc_requirements: { type: ["object", "null"], additionalProperties: false },
-    mac_requirements: { type: ["object", "null"], additionalProperties: false },
+    pc_requirements: {
+      anyOf: [
+        {
+          type: "object",
+          properties: {
+            minimum: { type: "string" },
+            recommended: { anyOf: [{ type: "string" }, { type: "null" }] },
+          },
+          additionalProperties: false,
+        },
+        { type: "null" },
+      ],
+    },
+    mac_requirements: {
+      anyOf: [
+        {
+          type: "object",
+          properties: {
+            minimum: { type: "string" },
+            recommended: { anyOf: [{ type: "string" }, { type: "null" }] },
+          },
+          additionalProperties: false,
+        },
+        { type: "null" },
+      ],
+    },
     linux_requirements: {
-      type: ["object", "null"],
-      additionalProperties: false,
+      anyOf: [
+        {
+          type: "object",
+          properties: {
+            minimum: { type: "string" },
+            recommended: { anyOf: [{ type: "string" }, { type: "null" }] },
+          },
+          additionalProperties: false,
+        },
+        { type: "null" },
+      ],
     },
 
-    legal_notice: { type: ["string", "null"] },
-    developers: {
-      type: "array",
-      items: { type: "string" },
-    },
-    publishers: {
-      type: "array",
-      items: { type: "string" },
-    },
+    legal_notice: { anyOf: [{ type: "string" }, { type: "null" }] },
+    developers: { type: "array", items: { type: "string" } },
+    publishers: { type: "array", items: { type: "string" } },
 
-    // Platforms Object
     platforms: {
       type: "object",
       properties: {
@@ -106,7 +132,6 @@ export const gameSchemaJSON = {
       additionalProperties: false,
     },
 
-    // Taxonomy Arrays
     categories: {
       type: "array",
       items: {
@@ -119,17 +144,23 @@ export const gameSchemaJSON = {
         additionalProperties: false,
       },
     },
+
     genres: {
-      type: ["array", "null"],
-      items: {
-        type: "object",
-        properties: {
-          id: { type: "string" },
-          description: { type: "string" },
+      anyOf: [
+        {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              id: { type: "string" },
+              description: { type: "string" },
+            },
+            required: ["id", "description"],
+            additionalProperties: false,
+          },
         },
-        required: ["id", "description"],
-        additionalProperties: false,
-      },
+        { type: "null" },
+      ],
     },
   },
   required: [
