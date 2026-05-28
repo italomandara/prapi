@@ -370,4 +370,17 @@ export async function getGameMetadata(hints: string) {
       }),
     },
   );
+  const data = await response.json();
+
+  // WRONG - assumes first block is the JSON text
+  const result = JSON.parse(data.choices[0].message.content);
+
+  // RIGHT - compound-beta may return an array of content blocks
+  const message = data.choices[0].message;
+  const content =
+    typeof message.content === "string"
+      ? message.content
+      : (message.content?.find((b: any) => b.type === "text")?.text ?? "");
+
+  return JSON.parse(content);
 }
