@@ -354,7 +354,11 @@ export async function getGameMetadata(hints: string) {
         model: "compound-beta",
         response_format: {
           type: "json_schema",
-          json_schema: gameSchemaJSON,
+          json_schema: {
+            name: "game_result", // ← this was missing
+            strict: true,
+            schema: gameSchemaJSON,
+          },
         },
         messages: [
           {
