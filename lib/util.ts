@@ -359,7 +359,8 @@ export async function getGameMetadata(hints: string) {
         messages: [
           {
             role: "system",
-            content: systemInstruction,
+            // content: systemInstruction,
+            content: `You are a video game database service. Your job is to analyze a file path, identify the video game it belongs to, find an appropriate Steam id if possible, and return structured data.`,
           },
           {
             role: "user",
