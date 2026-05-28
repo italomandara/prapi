@@ -359,11 +359,11 @@ export async function getGameMetadata(hints: string) {
         messages: [
           {
             role: "system",
-            content: "Search the web and return structured product data.",
+            content: systemInstruction,
           },
           {
             role: "user",
-            content: `Return the metadata for the game with this path: ${hints}`,
+            content: `Return the JSON for the game with this path: ${hints}`,
           },
         ],
       }),
