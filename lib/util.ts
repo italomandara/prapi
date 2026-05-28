@@ -351,7 +351,7 @@ export async function getGameMetadata(hints: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "compound-beta",
+        model: "llama-3.3-70b-versatile",
         response_format: {
           type: "json_schema",
           json_schema: {
