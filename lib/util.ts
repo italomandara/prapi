@@ -371,7 +371,7 @@ export async function getGameMetadata(hints: string) {
     },
   );
   const data = await response.json();
-
+  console.log(data);
   // WRONG - assumes first block is the JSON text
   const result = JSON.parse(data.choices[0].message.content);
 
