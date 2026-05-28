@@ -12,9 +12,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.body.api === "groq") {
     const data = await getGameMetadata(req.body.hints);
-    return res.status(200).json({ data });
+    res.status(200).json({ data });
+  } else {
+    const data = await getGoogleGameMetadata(req.body.hints);
+    res.status(200).json({ data });
   }
-
-  const data = await getGoogleGameMetadata(req.body.hints);
-  return res.status(200).json({ data });
 }
