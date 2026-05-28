@@ -369,6 +369,7 @@ export async function getGameMetadata(hints: string) {
   );
 
   const searchData = await searchRes.json();
+  console.log("Raw search data:", JSON.stringify(searchData, null, 2));
   const rawText = searchData.choices[0].message.content;
 
   // Step 2: llama-3.3-70b extracts into your strict schema

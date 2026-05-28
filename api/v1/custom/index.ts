@@ -10,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Missing hints in request body" });
   }
 
-  if (req.body.api === "groq") {
+  if (req.body.api && req.body.api === "groq") {
     const data = await getGameMetadata(req.body.hints);
     res.status(200).json({ data });
   } else {
