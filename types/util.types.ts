@@ -1,7 +1,16 @@
 export type Nullable<T> = T | null;
 
+type VulkanOptions = "experimental" | "latest" | "dbh" | "kosmickrisp";
+type CxGraphicsBackend =
+  | "dxmt"
+  | "d3dmetal3"
+  | "d3dmetal4"
+  | "wined3d"
+  | "dxvk"
+  | "auto";
+
 export type GameSettings = {
-  cxGraphicsBackend?: string;
+  cxGraphicsBackend?: CxGraphicsBackend;
   wineMSync?: boolean;
   mtlHudEnabled?: boolean;
   x87PatchEnabled?: boolean;
@@ -16,7 +25,7 @@ export type GameSettings = {
   disableHidraw?: boolean;
   ue4Hack?: boolean;
   mvkArgBuff?: string;
-  vulkanLib?: string;
+  vulkanLib?: VulkanOptions;
   dxvk?: string;
   wineEsync?: boolean;
   d3dMEnableMetalFX?: boolean;

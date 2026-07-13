@@ -5,6 +5,7 @@ import {
   CACHE_STALE_REVALIDATE,
   gameSettings,
 } from "../../../constants.js";
+import type { GameSettings } from "../../../types/util.types.js";
 const API_ROOT = process.env.API_ROOT;
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader(
@@ -16,7 +17,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const response = gameSettings[SteamID as keyof typeof gameSettings];
+  const response: GameSettings | undefined = gameSettings.get(
+    SteamID as string,
+  );
 
   return res.json(response);
 }
