@@ -19,5 +19,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const data: GameSettings | undefined = gameSettings.get(steamID as string);
 
-  return res.json({ data });
+  return res.json({ data: data || null });
 }
