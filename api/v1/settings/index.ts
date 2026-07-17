@@ -17,9 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const response: GameSettings | undefined = gameSettings.get(
-    steamID as string,
-  );
+  const data: GameSettings | undefined = gameSettings.get(steamID as string);
 
-  return res.json(response);
+  return res.json({ data });
 }
