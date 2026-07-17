@@ -18,6 +18,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const data: GameSettings | undefined = gameSettings.get(steamID as string);
+  if (typeof data === "undefined") {
+    return res.status(404).json({ error: "Not Found" });
+  }
 
   return res.json({ data: data || null });
 }
