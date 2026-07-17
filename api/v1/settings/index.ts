@@ -12,13 +12,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     "Cache-Control",
     `public, s-maxage=${CACHE_LIFESPAN} , stale-while-revalidate=${CACHE_STALE_REVALIDATE}`,
   );
-  const { SteamID } = req.query;
+  const { steamID } = req.query;
   if (!requireApiKey(req)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   const response: GameSettings | undefined = gameSettings.get(
-    SteamID as string,
+    steamID as string,
   );
 
   return res.json(response);
