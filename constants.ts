@@ -22,6 +22,17 @@ export const gameSettings = new Map<string, GameSettings>([
     },
   ],
   [
+    "612880",
+    {
+      // Wolfenstein II: The New Colossus
+      cxGraphicsBackend: "dxvk",
+      gameArguments: "+r_renderAPI 1",
+      envVariables:
+        "MVK_CONFIG_MAX_ACTIVE_METAL_COMMAND_BUFFERS_PER_QUEUE=128 MVK_CONFIG_RESUME_LOST_DEVICE=1  MVK_CONFIG_SHOULD_MAXIMIZE_CONCURRENT_COMPILATION=1",
+      vulkanLib: "experimental",
+    },
+  ],
+  [
     "782330",
     {
       // Doom Eternal
